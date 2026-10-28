@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Release builds (production, com.marzvpn.app): the upstream sing-box UI (engineer tools) is disabled and
+     cannot be opened, not even via the quick-settings tile long-press. MARZ VPN's own UI is the only entry
+     point. Plus the pinned App API network policy. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- MARZ production UI does not scan QR, inspect apps/location, self-install or use root tooling. -->
+    <!-- Lint examines removal declarations as permissions. They REMOVE these
+         capabilities; final merged-manifest/APK checks enforce their absence. -->
+    <uses-permission android:name="android.permission.CAMERA" tools:node="remove"
+        tools:ignore="PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" tools:node="remove" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:node="remove" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:node="remove"
+        tools:ignore="QueryAllPackagesPermission" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" tools:node="remove" />
+    <uses-permission android:name="android.permission.UPDATE_PACKAGES_WITHOUT_USER_ACTION" tools:node="remove" />
+    <uses-permission android:name="moe.shizuku.manager.permission.API_V23" tools:node="remove" />
+    <application
+        android:networkSecurityConfig="@xml/marz_app_network"
+        tools:ignore="UnusedAttribute">
+        <activity
+            android:name="io.nekohasekai.sfa.compose.MainActivity"
+            android:enabled="false"
+            android:exported="false"
+            tools:replace="android:exported"
+            tools:node="merge" />
+        <!-- Upstream LSPosed/root integration: not used by MARZ VPN, so no exported provider. -->
+        <provider
+            android:name="io.github.libxposed.service.XposedProvider"
+            android:authorities="${applicationId}.XposedService"
+            tools:node="remove" />
+    </application>
+</manifest>

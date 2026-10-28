@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pilot and release (production): HTTPS only, system CAs only (no user-installed CAs), and the App API host pinned to the
+     root CAs Cloudflare issues edge certificates from (Let's Encrypt, Google Trust Services,
+     SSL.com, Sectigo). SPKI SHA-256 computed from the roots; expiration turns pinning off rather
+     than locking the app out if a CA changes unannounced after that date. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="false">app-api.marzvpn.com</domain>
+        <pin-set expiration="2027-10-01">
+            <!-- ISRG Root X1 / X2 (Let's Encrypt) -->
+            <pin digest="SHA-256">C5+lpZ7tcVwmwQIMcRtPbsQtWLABXhQzejna0wHFr8M=</pin>
+            <pin digest="SHA-256">diGVwiVYbubAI3RW4hB9xU8e/CH2GnkuvVFZE8zmgzI=</pin>
+            <!-- ISRG Root YE / Root YR (Let's Encrypt Gen-Y; marzvpn.com already chains through Root YE,
+                 which devices with an updated CA store may trust directly) -->
+            <pin digest="SHA-256">sCkq5UWXjg+7mKu9lMhhYF5bGLsy7VI/UNW3tccdR7w=</pin>
+            <pin digest="SHA-256">fk6IOKit1ild5647BH06ujSIq5XbCgqlbYl6ANhhi88=</pin>
+            <!-- GTS Root R1 / R3 / R4 (Google Trust Services) -->
+            <pin digest="SHA-256">hxqRlPTu1bMS/0DITB1SSu0vd4u/8l8TjPgfaAp63Gc=</pin>
+            <pin digest="SHA-256">QXnt2YHvdHR3tJYmQIr0Paosp6t/nggsEGD4QJZ3Q0g=</pin>
+            <pin digest="SHA-256">mEflZT5enoR1FuXLgYYGqnVEoZvmf9c2bVBpiOjYQ0c=</pin>
+            <!-- SSL.com roots -->
+            <pin digest="SHA-256">oyD01TTXvpfBro3QSZc1vIlcMjrdLTiL/M9mLCPX+Zo=</pin>
+            <pin digest="SHA-256">0cRTd+vc1hjNFlHcLgLCHXUeWqn80bNDH/bs9qMTSPo=</pin>
+            <pin digest="SHA-256">G/ANXI8TwJTdF+AFBM8IiIUPEv0Gf6H5LA/b9guG4yE=</pin>
+            <pin digest="SHA-256">K89VOmb1cJAN3TK6bf4ezAbJGC1mLcG2Dh97dnwr3VQ=</pin>
+            <!-- Sectigo / USERTrust roots -->
+            <pin digest="SHA-256">sLVjNUaFYfW7n6EtgBeEpjOlcnBdNPMrZDRF36iwBdE=</pin>
+            <pin digest="SHA-256">Douxi77vs4G+Ib/BogbTFymEYq0QSFXwSgVCaZcI09Q=</pin>
+            <pin digest="SHA-256">x4QzPSC810K5/cMjb05Qm4k3Bw5zBn4lTdO/nEW/Td4=</pin>
+            <pin digest="SHA-256">ICGRfpgmOUXIWcQ/HXPLQTkFPEFPoDyjvH7ohhQpjzs=</pin>
+        </pin-set>
+    </domain-config>
+</network-security-config>

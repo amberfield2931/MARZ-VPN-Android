@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- TEST ONLY: pilot (release) code paths with cleartext to the lab App API on loopback. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <application
+        android:networkSecurityConfig="@xml/marz_lab_network"
+        tools:ignore="UnusedAttribute">
+        <activity
+            android:name="io.nekohasekai.sfa.compose.MainActivity"
+            android:enabled="false"
+            android:exported="false"
+            tools:replace="android:exported"
+            tools:node="merge" />
+    </application>
+</manifest>

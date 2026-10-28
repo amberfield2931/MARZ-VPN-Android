@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Debug builds only: cleartext to the lab App API on loopback (adb reverse). Everything else stays HTTPS-only. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">127.0.0.1</domain>
+        <!-- lab App API through the VPN (run_lab option api-via-tunnel); TEST-NET-3, never a real host -->
+        <domain includeSubdomains="false">203.0.113.80</domain>
+        <domain includeSubdomains="false">localhost</domain>
+    </domain-config>
+</network-security-config>

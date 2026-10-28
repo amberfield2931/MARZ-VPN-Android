@@ -1,0 +1,3155 @@
+{
+ "product": {
+  "package": "com.marzvpn.app",
+  "version": "1.0.0-rc6",
+  "versionCode": 1000008,
+  "androidCommit": "be4b72c34a4349a39b72ab2cb679663d55a5c468"
+ },
+ "goModules": [
+  {
+   "module": "filippo.io/age",
+   "version": "v1.3.1",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "filippo.io/edwards25519",
+   "version": "v1.2.0",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "filippo.io/hpke",
+   "version": "v0.4.0",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/RyuaNerin/go-krypto",
+   "version": "v1.3.0",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/ajg/form",
+   "version": "v1.5.1",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/anchore/go-lzo",
+   "version": "v0.1.0",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/andybalholm/brotli",
+   "version": "v1.1.0",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/anmitsu/go-shlex",
+   "version": "v0.0.0-20200514113438-38f4b401e2be",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/anytls/sing-anytls",
+   "version": "v0.0.11",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/axiomhq/hyperloglog",
+   "version": "v0.0.0-20240319100328-84253e514e02",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/caddyserver/certmagic",
+   "version": "v0.25.3-0.20260421143802-60d9d8b415d6",
+   "license": "Apache-2.0",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/caddyserver/zerossl",
+   "version": "v0.1.5",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/coder/websocket",
+   "version": "v1.8.14",
+   "license": "ISC",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/creack/pty",
+   "version": "v1.1.24",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/cretz/bine",
+   "version": "v0.2.0",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/database64128/netx-go",
+   "version": "v0.1.1",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/database64128/tfo-go/v2",
+   "version": "v2.3.2",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/dgryski/go-camellia",
+   "version": "v0.0.0-20191119043421-69a8a13fb23d",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/dgryski/go-metro",
+   "version": "v0.0.0-20180109044635-280f6062b5bc",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/florianl/go-nfqueue/v2",
+   "version": "v2.1.0",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/fsnotify/fsnotify",
+   "version": "v1.9.0",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/fxamacker/cbor/v2",
+   "version": "v2.9.0",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/gaissmai/bart",
+   "version": "v0.26.1",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/go-chi/chi/v5",
+   "version": "v5.2.5",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/go-chi/render",
+   "version": "v1.0.3",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/go4org/hashtriemap",
+   "version": "v0.0.0-20251130024219-545ba229f689",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/gobwas/httphead",
+   "version": "v0.1.0",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/gobwas/pool",
+   "version": "v0.2.1",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/godbus/dbus/v5",
+   "version": "v5.2.2",
+   "license": "BSD-2-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/gofrs/uuid/v5",
+   "version": "v5.5.1",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/golang/groupcache",
+   "version": "v0.0.0-20241129210726-2c02b8208cf8",
+   "license": "Apache-2.0",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/google/btree",
+   "version": "v1.1.3",
+   "license": "Apache-2.0",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/google/certificate-transparency-go",
+   "version": "v1.3.2",
+   "license": "Apache-2.0",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/google/gopacket",
+   "version": "v1.1.19",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/hashicorp/yamux",
+   "version": "v0.1.2",
+   "license": "MPL-2.0",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/hdevalence/ed25519consensus",
+   "version": "v0.2.0",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/huin/goupnp",
+   "version": "v1.3.0",
+   "license": "BSD-2-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/jackpal/go-nat-pmp",
+   "version": "v1.0.2",
+   "license": "Apache-2.0",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/jsimonetti/rtnetlink",
+   "version": "v1.4.1",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/klauspost/compress",
+   "version": "v1.19.1",
+   "license": "Apache-2.0",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/klauspost/cpuid/v2",
+   "version": "v2.3.0",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/koron/go-ssdp",
+   "version": "v0.0.4",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/kr/fs",
+   "version": "v0.1.0",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/libdns/libdns",
+   "version": "v1.1.1",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/libp2p/go-nat",
+   "version": "v1.0.1-0.20250821073202-01afc089f138",
+   "license": "Apache-2.0",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/libp2p/go-netroute",
+   "version": "v0.2.1",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/logrusorgru/aurora",
+   "version": "v2.0.3+incompatible",
+   "license": "Unlicense",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/mdlayher/netlink",
+   "version": "v1.11.2",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/mdlayher/socket",
+   "version": "v0.6.0",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/metacubex/utls",
+   "version": "v1.8.7",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/mholt/acmez/v3",
+   "version": "v3.1.6",
+   "license": "Apache-2.0",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/miekg/dns",
+   "version": "v1.1.72",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/pierrec/lz4/v4",
+   "version": "v4.1.26",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/pion/dtls/v3",
+   "version": "v3.1.5",
+   "license": "CC0-1.0+MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/pion/logging",
+   "version": "v0.2.4",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/pion/transport/v4",
+   "version": "v4.0.2",
+   "license": "BSD-3-Clause+MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/pires/go-proxyproto",
+   "version": "v0.8.1",
+   "license": "Apache-2.0",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/pkg/sftp",
+   "version": "v1.13.10",
+   "license": "BSD-2-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/quic-go/qpack",
+   "version": "v0.6.0",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/bbolt",
+   "version": "v0.0.0-20260915102804-500ee1e84832",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/cors",
+   "version": "v1.2.1",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/cronet-go",
+   "version": "v0.0.0-20260912104727-0d28acc44093",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/cronet-go/all",
+   "version": "v0.0.0-20260912104727-0d28acc44093",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/cronet-go/lib/android_386",
+   "version": "v0.0.0-20260912104006-c10c03c318db",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "x86"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/cronet-go/lib/android_amd64",
+   "version": "v0.0.0-20260912104006-c10c03c318db",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/cronet-go/lib/android_arm",
+   "version": "v0.0.0-20260912104006-c10c03c318db",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "armeabi-v7a"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/cronet-go/lib/android_arm64",
+   "version": "v0.0.0-20260912104006-c10c03c318db",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "arm64-v8a"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/fswatch",
+   "version": "v0.1.2",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/gliderssh",
+   "version": "v0.3.4-0.20260531100337-2194faca5648",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/gomobile",
+   "version": "v0.1.12",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/gvisor",
+   "version": "v0.0.0-20260727.0-sing-box-mod.1",
+   "license": "Apache-2.0",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/netlink",
+   "version": "v0.0.0-20260814022025-64455d367bbf",
+   "license": "Apache-2.0",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/nftables",
+   "version": "v0.3.0-mod.4",
+   "license": "Apache-2.0",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/quic-go",
+   "version": "v0.61.0-sing-box-mod.9",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/sing",
+   "version": "v0.9.7-0.20260929150544-0ad23b637bd4",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/sing-mux",
+   "version": "v0.3.10-0.20260929204512-caf09fe32475",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/sing-openconnect",
+   "version": "v0.1.1-0.20260929151225-cbd68c45de58",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/sing-openvpn",
+   "version": "v0.1.1-0.20260929151220-7c3045dbddce",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/sing-quic",
+   "version": "v0.7.2-0.20261002084117-75c3ac4fa12b",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/sing-shadowsocks",
+   "version": "v0.2.9-0.20260929204512-65740e0f0e3e",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/sing-shadowsocks2",
+   "version": "v0.2.2-0.20260929152114-a69d1086332b",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/sing-shadowtls",
+   "version": "v0.2.2-0.20260928201441-a9c0127d5c99",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/sing-snell",
+   "version": "v0.0.0-20260904135315-bc5a12ac736f",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/sing-tun",
+   "version": "v0.9.7-0.20261009020158-bca4bf029237",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/sing-usbip",
+   "version": "v0.0.0-20260817040617-28bd42667eca",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/sing-vmess",
+   "version": "v0.2.9-0.20260929152519-9b95ab8c9478",
+   "license": "GPL-3.0-or-later",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/smux",
+   "version": "v1.5.50-sing-box-mod.1",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/tailscale",
+   "version": "v1.102.1-sing-box-1.14-mod.5",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/wireguard-go",
+   "version": "v0.0.8-0.20260929150556-6731c7387c81",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/sagernet/ws",
+   "version": "v0.0.0-20231204124109-acfe8907c854",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/smallstep/pkcs7",
+   "version": "v0.1.1",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/tailscale/peercred",
+   "version": "v0.0.0-20250107143737-35a0c7bd7edc",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/tjfoc/gmsm",
+   "version": "v1.4.1",
+   "license": "Apache-2.0",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/vishvananda/netns",
+   "version": "v0.0.5",
+   "license": "Apache-2.0",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/x448/float16",
+   "version": "v0.8.4",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/youmark/pkcs8",
+   "version": "v0.0.0-20240726163527-a2c0da244d78",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "github.com/zeebo/blake3",
+   "version": "v0.2.4",
+   "license": "CC0-1.0",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "go.uber.org/multierr",
+   "version": "v1.11.0",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "go.uber.org/zap",
+   "version": "v1.27.1",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "go.uber.org/zap/exp",
+   "version": "v0.3.0",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "go4.org/mem",
+   "version": "v0.0.0-20240501181205-ae6ca9944745",
+   "license": "Apache-2.0",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "go4.org/netipx",
+   "version": "v0.0.0-20231129151722-fdeea329fbba",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "golang.org/x/crypto",
+   "version": "v0.54.0",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "golang.org/x/exp",
+   "version": "v0.0.0-20260410095643-746e56fc9e2f",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "golang.org/x/mod",
+   "version": "v0.27.0",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "gomobile-tool"
+   ]
+  },
+  {
+   "module": "golang.org/x/mod",
+   "version": "v0.37.0",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "golang.org/x/net",
+   "version": "v0.57.0",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "golang.org/x/oauth2",
+   "version": "v0.36.0",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "golang.org/x/sync",
+   "version": "v0.16.0",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "gomobile-tool"
+   ]
+  },
+  {
+   "module": "golang.org/x/sync",
+   "version": "v0.22.0",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "golang.org/x/sys",
+   "version": "v0.47.0",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "golang.org/x/term",
+   "version": "v0.45.0",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "golang.org/x/text",
+   "version": "v0.40.0",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "golang.org/x/time",
+   "version": "v0.15.0",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "golang.org/x/tools",
+   "version": "v0.36.0",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "gomobile-tool"
+   ]
+  },
+  {
+   "module": "golang.org/x/tools",
+   "version": "v0.47.0",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "google.golang.org/genproto/googleapis/rpc",
+   "version": "v0.0.0-20251202230838-ff82c1b0f217",
+   "license": "Apache-2.0",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "google.golang.org/grpc",
+   "version": "v1.79.1",
+   "license": "Apache-2.0",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "google.golang.org/protobuf",
+   "version": "v1.36.11",
+   "license": "BSD-3-Clause",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  },
+  {
+   "module": "lukechampine.com/blake3",
+   "version": "v1.3.0",
+   "license": "MIT",
+   "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+   ]
+  }
+ ],
+ "gradleArtifacts": [
+  {
+   "group": "androidx.activity",
+   "artifact": "activity",
+   "version": "1.13.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.activity",
+   "artifact": "activity-compose",
+   "version": "1.13.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.activity",
+   "artifact": "activity-ktx",
+   "version": "1.13.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.annotation",
+   "artifact": "annotation",
+   "version": "1.10.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.annotation",
+   "artifact": "annotation-experimental",
+   "version": "1.5.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.annotation",
+   "artifact": "annotation-jvm",
+   "version": "1.10.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.appcompat",
+   "artifact": "appcompat",
+   "version": "1.7.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.appcompat",
+   "artifact": "appcompat-resources",
+   "version": "1.7.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.arch.core",
+   "artifact": "core-common",
+   "version": "2.2.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.arch.core",
+   "artifact": "core-runtime",
+   "version": "2.2.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.autofill",
+   "artifact": "autofill",
+   "version": "1.0.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.browser",
+   "artifact": "browser",
+   "version": "1.10.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.camera",
+   "artifact": "camera-camera2",
+   "version": "1.6.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.camera",
+   "artifact": "camera-camera2-pipe",
+   "version": "1.6.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.camera",
+   "artifact": "camera-core",
+   "version": "1.6.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.camera",
+   "artifact": "camera-lifecycle",
+   "version": "1.6.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.camera",
+   "artifact": "camera-video",
+   "version": "1.6.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.camera",
+   "artifact": "camera-view",
+   "version": "1.6.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.camera.featurecombinationquery",
+   "artifact": "featurecombinationquery",
+   "version": "1.6.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.camera.viewfinder",
+   "artifact": "viewfinder-core",
+   "version": "1.5.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.cardview",
+   "artifact": "cardview",
+   "version": "1.0.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.collection",
+   "artifact": "collection",
+   "version": "1.5.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.collection",
+   "artifact": "collection-jvm",
+   "version": "1.5.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.collection",
+   "artifact": "collection-ktx",
+   "version": "1.5.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose",
+   "artifact": "compose-bom",
+   "version": "2026.08.00",
+   "license": "BOM (no code)",
+   "source": "upstream project"
+  },
+  {
+   "group": "androidx.compose.animation",
+   "artifact": "animation",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.animation",
+   "artifact": "animation-android",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.animation",
+   "artifact": "animation-core",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.animation",
+   "artifact": "animation-core-android",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.foundation",
+   "artifact": "foundation",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.foundation",
+   "artifact": "foundation-android",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.foundation",
+   "artifact": "foundation-layout",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.foundation",
+   "artifact": "foundation-layout-android",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.material",
+   "artifact": "material-icons-core",
+   "version": "1.7.8",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.material",
+   "artifact": "material-icons-core-android",
+   "version": "1.7.8",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.material",
+   "artifact": "material-icons-extended",
+   "version": "1.7.8",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.material",
+   "artifact": "material-icons-extended-android",
+   "version": "1.7.8",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.material",
+   "artifact": "material-ripple",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.material",
+   "artifact": "material-ripple-android",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.material3",
+   "artifact": "material3",
+   "version": "1.4.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.material3",
+   "artifact": "material3-android",
+   "version": "1.4.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.material3.adaptive",
+   "artifact": "adaptive",
+   "version": "1.3.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.material3.adaptive",
+   "artifact": "adaptive-android",
+   "version": "1.3.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.runtime",
+   "artifact": "runtime",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.runtime",
+   "artifact": "runtime-android",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.runtime",
+   "artifact": "runtime-annotation",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.runtime",
+   "artifact": "runtime-annotation-android",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.runtime",
+   "artifact": "runtime-livedata",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.runtime",
+   "artifact": "runtime-retain",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.runtime",
+   "artifact": "runtime-retain-android",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.runtime",
+   "artifact": "runtime-saveable",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.runtime",
+   "artifact": "runtime-saveable-android",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.ui",
+   "artifact": "ui",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.ui",
+   "artifact": "ui-android",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.ui",
+   "artifact": "ui-geometry",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.ui",
+   "artifact": "ui-geometry-android",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.ui",
+   "artifact": "ui-graphics",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.ui",
+   "artifact": "ui-graphics-android",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.ui",
+   "artifact": "ui-text",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.ui",
+   "artifact": "ui-text-android",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.ui",
+   "artifact": "ui-tooling-preview",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.ui",
+   "artifact": "ui-tooling-preview-android",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.ui",
+   "artifact": "ui-unit",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.ui",
+   "artifact": "ui-unit-android",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.ui",
+   "artifact": "ui-util",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.compose.ui",
+   "artifact": "ui-util-android",
+   "version": "1.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.concurrent",
+   "artifact": "concurrent-futures",
+   "version": "1.1.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.concurrent",
+   "artifact": "concurrent-futures-ktx",
+   "version": "1.1.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.constraintlayout",
+   "artifact": "constraintlayout",
+   "version": "2.2.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.constraintlayout",
+   "artifact": "constraintlayout-core",
+   "version": "1.1.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.coordinatorlayout",
+   "artifact": "coordinatorlayout",
+   "version": "1.3.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.core",
+   "artifact": "core",
+   "version": "1.19.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.core",
+   "artifact": "core-backported-fixes",
+   "version": "1.0.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.core",
+   "artifact": "core-ktx",
+   "version": "1.19.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.core",
+   "artifact": "core-viewtree",
+   "version": "1.0.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.cursoradapter",
+   "artifact": "cursoradapter",
+   "version": "1.0.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.customview",
+   "artifact": "customview",
+   "version": "1.2.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.customview",
+   "artifact": "customview-poolingcontainer",
+   "version": "1.0.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.databinding",
+   "artifact": "viewbinding",
+   "version": "9.3.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.drawerlayout",
+   "artifact": "drawerlayout",
+   "version": "1.1.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.dynamicanimation",
+   "artifact": "dynamicanimation",
+   "version": "1.1.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.emoji2",
+   "artifact": "emoji2",
+   "version": "1.4.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.emoji2",
+   "artifact": "emoji2-views-helper",
+   "version": "1.4.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.exifinterface",
+   "artifact": "exifinterface",
+   "version": "1.4.2",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.fragment",
+   "artifact": "fragment",
+   "version": "1.6.2",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.fragment",
+   "artifact": "fragment-ktx",
+   "version": "1.6.2",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.graphics",
+   "artifact": "graphics-path",
+   "version": "1.0.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.graphics",
+   "artifact": "graphics-shapes",
+   "version": "1.0.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.graphics",
+   "artifact": "graphics-shapes-android",
+   "version": "1.0.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.interpolator",
+   "artifact": "interpolator",
+   "version": "1.0.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-common",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-common-java8",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-common-jvm",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-livedata",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-livedata-core",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-livedata-core-ktx",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-livedata-ktx",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-process",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-runtime",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-runtime-android",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-runtime-compose",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-runtime-compose-android",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-runtime-ktx",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-runtime-ktx-android",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-service",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-viewmodel",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-viewmodel-android",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-viewmodel-compose",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-viewmodel-compose-android",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-viewmodel-ktx",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-viewmodel-savedstate",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.lifecycle",
+   "artifact": "lifecycle-viewmodel-savedstate-android",
+   "version": "2.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.loader",
+   "artifact": "loader",
+   "version": "1.0.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.media3",
+   "artifact": "media3-common",
+   "version": "1.9.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.media3",
+   "artifact": "media3-container",
+   "version": "1.9.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.media3",
+   "artifact": "media3-muxer",
+   "version": "1.9.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.navigation",
+   "artifact": "navigation-common",
+   "version": "2.9.8",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.navigation",
+   "artifact": "navigation-common-android",
+   "version": "2.9.8",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.navigation",
+   "artifact": "navigation-compose",
+   "version": "2.9.8",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.navigation",
+   "artifact": "navigation-compose-android",
+   "version": "2.9.8",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.navigation",
+   "artifact": "navigation-fragment",
+   "version": "2.9.8",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.navigation",
+   "artifact": "navigation-fragment-ktx",
+   "version": "2.9.8",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.navigation",
+   "artifact": "navigation-runtime",
+   "version": "2.9.8",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.navigation",
+   "artifact": "navigation-runtime-android",
+   "version": "2.9.8",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.navigation",
+   "artifact": "navigation-ui",
+   "version": "2.9.8",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.navigation",
+   "artifact": "navigation-ui-ktx",
+   "version": "2.9.8",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.navigationevent",
+   "artifact": "navigationevent",
+   "version": "1.0.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.navigationevent",
+   "artifact": "navigationevent-android",
+   "version": "1.0.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.navigationevent",
+   "artifact": "navigationevent-compose",
+   "version": "1.0.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.navigationevent",
+   "artifact": "navigationevent-compose-android",
+   "version": "1.0.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.preference",
+   "artifact": "preference",
+   "version": "1.2.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.preference",
+   "artifact": "preference-ktx",
+   "version": "1.2.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.profileinstaller",
+   "artifact": "profileinstaller",
+   "version": "1.4.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.recyclerview",
+   "artifact": "recyclerview",
+   "version": "1.2.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.resourceinspection",
+   "artifact": "resourceinspection-annotation",
+   "version": "1.0.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.room",
+   "artifact": "room-common",
+   "version": "2.8.4",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.room",
+   "artifact": "room-common-jvm",
+   "version": "2.8.4",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.room",
+   "artifact": "room-runtime",
+   "version": "2.8.4",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.room",
+   "artifact": "room-runtime-android",
+   "version": "2.8.4",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.savedstate",
+   "artifact": "savedstate",
+   "version": "1.4.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.savedstate",
+   "artifact": "savedstate-android",
+   "version": "1.4.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.savedstate",
+   "artifact": "savedstate-compose",
+   "version": "1.4.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.savedstate",
+   "artifact": "savedstate-compose-android",
+   "version": "1.4.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.savedstate",
+   "artifact": "savedstate-ktx",
+   "version": "1.4.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.slidingpanelayout",
+   "artifact": "slidingpanelayout",
+   "version": "1.2.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.sqlite",
+   "artifact": "sqlite",
+   "version": "2.6.2",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.sqlite",
+   "artifact": "sqlite-android",
+   "version": "2.6.2",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.sqlite",
+   "artifact": "sqlite-framework",
+   "version": "2.6.2",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.sqlite",
+   "artifact": "sqlite-framework-android",
+   "version": "2.6.2",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.startup",
+   "artifact": "startup-runtime",
+   "version": "1.1.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.tracing",
+   "artifact": "tracing",
+   "version": "1.3.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.tracing",
+   "artifact": "tracing-android",
+   "version": "1.3.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.tracing",
+   "artifact": "tracing-ktx",
+   "version": "1.3.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.transition",
+   "artifact": "transition",
+   "version": "1.5.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.vectordrawable",
+   "artifact": "vectordrawable",
+   "version": "1.2.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.vectordrawable",
+   "artifact": "vectordrawable-animated",
+   "version": "1.2.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.versionedparcelable",
+   "artifact": "versionedparcelable",
+   "version": "1.1.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.viewpager",
+   "artifact": "viewpager",
+   "version": "1.0.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.viewpager2",
+   "artifact": "viewpager2",
+   "version": "1.0.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.webkit",
+   "artifact": "webkit",
+   "version": "1.16.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.window",
+   "artifact": "window",
+   "version": "1.5.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.window",
+   "artifact": "window-core",
+   "version": "1.5.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.window",
+   "artifact": "window-core-android",
+   "version": "1.5.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.work",
+   "artifact": "work-runtime",
+   "version": "2.11.2",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "androidx.work",
+   "artifact": "work-runtime-ktx",
+   "version": "2.11.2",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "com.android.tools.smali",
+   "artifact": "smali-dexlib2",
+   "version": "3.0.9",
+   "license": "BSD-3-Clause",
+   "source": "pom"
+  },
+  {
+   "group": "com.atlassian.commonmark",
+   "artifact": "commonmark",
+   "version": "0.13.0",
+   "license": "BSD-2-Clause",
+   "source": "pom"
+  },
+  {
+   "group": "com.atlassian.commonmark",
+   "artifact": "commonmark-ext-gfm-strikethrough",
+   "version": "0.13.0",
+   "license": "BSD-2-Clause",
+   "source": "pom"
+  },
+  {
+   "group": "com.atlassian.commonmark",
+   "artifact": "commonmark-ext-gfm-tables",
+   "version": "0.13.0",
+   "license": "BSD-2-Clause",
+   "source": "pom"
+  },
+  {
+   "group": "com.github.jeziellago",
+   "artifact": "Markwon",
+   "version": "58aa5aba6a",
+   "license": "Apache-2.0",
+   "source": "upstream project"
+  },
+  {
+   "group": "com.github.jeziellago",
+   "artifact": "compose-markdown",
+   "version": "0.7.2",
+   "license": "MIT",
+   "source": "upstream project"
+  },
+  {
+   "group": "com.github.topjohnwu.libsu",
+   "artifact": "core",
+   "version": "6.0.0",
+   "license": "Apache-2.0",
+   "source": "upstream project"
+  },
+  {
+   "group": "com.github.topjohnwu.libsu",
+   "artifact": "service",
+   "version": "6.0.0",
+   "license": "Apache-2.0",
+   "source": "upstream project"
+  },
+  {
+   "group": "com.google.android.material",
+   "artifact": "material",
+   "version": "1.14.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "com.google.auto.value",
+   "artifact": "auto-value-annotations",
+   "version": "1.6.3",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "com.google.code.findbugs",
+   "artifact": "jsr305",
+   "version": "3.0.2",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "com.google.dagger",
+   "artifact": "dagger",
+   "version": "2.59",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "com.google.errorprone",
+   "artifact": "error_prone_annotations",
+   "version": "2.47.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "com.google.guava",
+   "artifact": "failureaccess",
+   "version": "1.0.3",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "com.google.guava",
+   "artifact": "guava",
+   "version": "33.6.0-android",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "com.google.guava",
+   "artifact": "listenablefuture",
+   "version": "9999.0-empty-to-avoid-conflict-with-guava",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "com.google.j2objc",
+   "artifact": "j2objc-annotations",
+   "version": "3.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "com.google.zxing",
+   "artifact": "core",
+   "version": "3.5.4",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "com.itsaky.androidide.treesitter",
+   "artifact": "android-tree-sitter",
+   "version": "4.3.2",
+   "license": "LGPL-2.1",
+   "source": "pom"
+  },
+  {
+   "group": "com.itsaky.androidide.treesitter",
+   "artifact": "annotations",
+   "version": "4.3.2",
+   "license": "LGPL-2.1",
+   "source": "pom"
+  },
+  {
+   "group": "com.itsaky.androidide.treesitter",
+   "artifact": "tree-sitter-json",
+   "version": "4.3.2",
+   "license": "LGPL-2.1",
+   "source": "pom"
+  },
+  {
+   "group": "com.squareup.okhttp3",
+   "artifact": "okhttp",
+   "version": "4.12.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "com.squareup.okio",
+   "artifact": "okio",
+   "version": "3.9.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "com.squareup.okio",
+   "artifact": "okio-jvm",
+   "version": "3.9.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "dev.rikka.shizuku",
+   "artifact": "aidl",
+   "version": "13.1.5",
+   "license": "MIT",
+   "source": "pom"
+  },
+  {
+   "group": "dev.rikka.shizuku",
+   "artifact": "api",
+   "version": "13.1.5",
+   "license": "MIT",
+   "source": "pom"
+  },
+  {
+   "group": "dev.rikka.shizuku",
+   "artifact": "provider",
+   "version": "13.1.5",
+   "license": "MIT",
+   "source": "pom"
+  },
+  {
+   "group": "dev.rikka.shizuku",
+   "artifact": "shared",
+   "version": "13.1.5",
+   "license": "MIT",
+   "source": "pom"
+  },
+  {
+   "group": "io.coil-kt",
+   "artifact": "coil-base",
+   "version": "2.2.2",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "io.coil-kt.coil3",
+   "artifact": "coil",
+   "version": "3.0.4",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "io.coil-kt.coil3",
+   "artifact": "coil-android",
+   "version": "3.0.4",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "io.coil-kt.coil3",
+   "artifact": "coil-core",
+   "version": "3.0.4",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "io.coil-kt.coil3",
+   "artifact": "coil-core-android",
+   "version": "3.0.4",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "io.coil-kt.coil3",
+   "artifact": "coil-gif",
+   "version": "3.0.4",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "io.coil-kt.coil3",
+   "artifact": "coil-network-core",
+   "version": "3.0.4",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "io.coil-kt.coil3",
+   "artifact": "coil-network-core-android",
+   "version": "3.0.4",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "io.coil-kt.coil3",
+   "artifact": "coil-network-okhttp",
+   "version": "3.0.4",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "io.coil-kt.coil3",
+   "artifact": "coil-network-okhttp-jvm",
+   "version": "3.0.4",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "io.github.Rosemoe.sora-editor",
+   "artifact": "editor",
+   "version": "0.23.6",
+   "license": "LGPL-2.1",
+   "source": "pom"
+  },
+  {
+   "group": "io.github.Rosemoe.sora-editor",
+   "artifact": "language-treesitter",
+   "version": "0.23.6",
+   "license": "LGPL-2.1",
+   "source": "pom"
+  },
+  {
+   "group": "io.github.sagernet",
+   "artifact": "libghostty-android",
+   "version": "0.1.0-alpha01",
+   "license": "MIT",
+   "source": "pom"
+  },
+  {
+   "group": "io.github.sagernet",
+   "artifact": "libghostty-android-compose",
+   "version": "0.1.0-alpha01",
+   "license": "MIT",
+   "source": "pom"
+  },
+  {
+   "group": "io.github.sagernet",
+   "artifact": "libghostty-android-extras",
+   "version": "0.1.0-alpha01",
+   "license": "MIT",
+   "source": "pom"
+  },
+  {
+   "group": "io.noties.markwon",
+   "artifact": "core",
+   "version": "4.6.2",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "io.noties.markwon",
+   "artifact": "ext-strikethrough",
+   "version": "4.6.2",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "io.noties.markwon",
+   "artifact": "ext-tables",
+   "version": "4.6.2",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "io.noties.markwon",
+   "artifact": "ext-tasklist",
+   "version": "4.6.2",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "io.noties.markwon",
+   "artifact": "html",
+   "version": "4.6.2",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "io.noties.markwon",
+   "artifact": "linkify",
+   "version": "4.6.2",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "jakarta.inject",
+   "artifact": "jakarta.inject-api",
+   "version": "2.0.1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "javax.inject",
+   "artifact": "javax.inject",
+   "version": "1",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains",
+   "artifact": "annotations",
+   "version": "23.0.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.androidx.lifecycle",
+   "artifact": "lifecycle-common",
+   "version": "2.9.5",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.androidx.lifecycle",
+   "artifact": "lifecycle-runtime",
+   "version": "2.9.5",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.androidx.lifecycle",
+   "artifact": "lifecycle-runtime-compose",
+   "version": "2.9.5",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.androidx.lifecycle",
+   "artifact": "lifecycle-viewmodel",
+   "version": "2.9.5",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.androidx.savedstate",
+   "artifact": "savedstate",
+   "version": "1.3.5",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.androidx.savedstate",
+   "artifact": "savedstate-compose",
+   "version": "1.3.5",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.compose.animation",
+   "artifact": "animation",
+   "version": "1.7.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.compose.animation",
+   "artifact": "animation-core",
+   "version": "1.7.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.compose.annotation-internal",
+   "artifact": "annotation",
+   "version": "1.8.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.compose.collection-internal",
+   "artifact": "collection",
+   "version": "1.7.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.compose.foundation",
+   "artifact": "foundation",
+   "version": "1.7.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.compose.foundation",
+   "artifact": "foundation-layout",
+   "version": "1.7.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.compose.runtime",
+   "artifact": "runtime",
+   "version": "1.9.2",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.compose.runtime",
+   "artifact": "runtime-saveable",
+   "version": "1.9.2",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.compose.ui",
+   "artifact": "ui",
+   "version": "1.7.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.compose.ui",
+   "artifact": "ui-geometry",
+   "version": "1.7.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.compose.ui",
+   "artifact": "ui-graphics",
+   "version": "1.7.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.compose.ui",
+   "artifact": "ui-text",
+   "version": "1.7.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.compose.ui",
+   "artifact": "ui-unit",
+   "version": "1.7.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.compose.ui",
+   "artifact": "ui-util",
+   "version": "1.7.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.kotlin",
+   "artifact": "kotlin-bom",
+   "version": "1.8.22",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.kotlin",
+   "artifact": "kotlin-parcelize-runtime",
+   "version": "2.4.10",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.kotlin",
+   "artifact": "kotlin-stdlib",
+   "version": "2.4.10",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.kotlin",
+   "artifact": "kotlin-stdlib-common",
+   "version": "2.4.10",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.kotlin",
+   "artifact": "kotlin-stdlib-jdk7",
+   "version": "1.9.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.kotlin",
+   "artifact": "kotlin-stdlib-jdk8",
+   "version": "1.9.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.kotlinx",
+   "artifact": "atomicfu",
+   "version": "0.28.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.kotlinx",
+   "artifact": "atomicfu-jvm",
+   "version": "0.28.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.kotlinx",
+   "artifact": "kotlinx-coroutines-android",
+   "version": "1.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.kotlinx",
+   "artifact": "kotlinx-coroutines-bom",
+   "version": "1.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.kotlinx",
+   "artifact": "kotlinx-coroutines-core",
+   "version": "1.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.kotlinx",
+   "artifact": "kotlinx-coroutines-core-jvm",
+   "version": "1.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.kotlinx",
+   "artifact": "kotlinx-serialization-bom",
+   "version": "1.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.kotlinx",
+   "artifact": "kotlinx-serialization-core",
+   "version": "1.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.kotlinx",
+   "artifact": "kotlinx-serialization-core-jvm",
+   "version": "1.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.kotlinx",
+   "artifact": "kotlinx-serialization-json",
+   "version": "1.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jetbrains.kotlinx",
+   "artifact": "kotlinx-serialization-json-jvm",
+   "version": "1.11.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.jspecify",
+   "artifact": "jspecify",
+   "version": "1.0.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "org.kodein.emoji",
+   "artifact": "emoji-kt",
+   "version": "2.5.0",
+   "license": "MIT",
+   "source": "pom"
+  },
+  {
+   "group": "org.kodein.emoji",
+   "artifact": "emoji-kt-jvm",
+   "version": "2.5.0",
+   "license": "MIT",
+   "source": "pom"
+  },
+  {
+   "group": "sh.calvin.reorderable",
+   "artifact": "reorderable",
+   "version": "3.1.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  },
+  {
+   "group": "sh.calvin.reorderable",
+   "artifact": "reorderable-android",
+   "version": "3.1.0",
+   "license": "Apache-2.0",
+   "source": "pom"
+  }
+ ],
+ "nativeLibraries": [
+  "lib/arm64-v8a/libandroid-tree-sitter.so",
+  "lib/arm64-v8a/libandroidx.graphics.path.so",
+  "lib/arm64-v8a/libbox.so",
+  "lib/arm64-v8a/libghostty_android.so",
+  "lib/arm64-v8a/libimage_processing_util_jni.so",
+  "lib/arm64-v8a/libsurface_util_jni.so",
+  "lib/arm64-v8a/libtree-sitter-json.so",
+  "lib/armeabi-v7a/libandroid-tree-sitter.so",
+  "lib/armeabi-v7a/libandroidx.graphics.path.so",
+  "lib/armeabi-v7a/libbox.so",
+  "lib/armeabi-v7a/libghostty_android.so",
+  "lib/armeabi-v7a/libimage_processing_util_jni.so",
+  "lib/armeabi-v7a/libsurface_util_jni.so",
+  "lib/armeabi-v7a/libtree-sitter-json.so",
+  "lib/x86/libandroid-tree-sitter.so",
+  "lib/x86/libandroidx.graphics.path.so",
+  "lib/x86/libbox.so",
+  "lib/x86/libghostty_android.so",
+  "lib/x86/libimage_processing_util_jni.so",
+  "lib/x86/libsurface_util_jni.so",
+  "lib/x86/libtree-sitter-json.so",
+  "lib/x86_64/libandroid-tree-sitter.so",
+  "lib/x86_64/libandroidx.graphics.path.so",
+  "lib/x86_64/libbox.so",
+  "lib/x86_64/libghostty_android.so",
+  "lib/x86_64/libimage_processing_util_jni.so",
+  "lib/x86_64/libsurface_util_jni.so",
+  "lib/x86_64/libtree-sitter-json.so"
+ ],
+ "unclassified": []
+}

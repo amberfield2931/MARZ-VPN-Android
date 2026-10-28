@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- MARZ VPN mark, same geometry as marzvpn.com/favicon.svg. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp" android:height="48dp"
+    android:viewportWidth="48" android:viewportHeight="48">
+    <path android:fillColor="#D5F15F"
+        android:pathData="M13,0h22a13,13 0,0 1,13 13v22a13,13 0,0 1,-13 13h-22a13,13 0,0 1,-13 -13v-22a13,13 0,0 1,13 -13z" />
+    <path android:fillColor="#20231F" android:pathData="M11,36V12h6l7,11 7,-11h6v24h-6V22l-7,10 -7,-10v14z" />
+</vector>

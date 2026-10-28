@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <!--Missing upstream UI translations; no feature activation or new public screen.-->
+    <string name="title_usbip">USB/IP</string>
+    <string name="usbip_with_tag">USB/IP：%1$s</string>
+    <string name="usbip_no_server">未找到 usbip 服务器</string>
+    <string name="usbip_no_devices">选择 USB 设备以通过此 usbip 服务器共享。</string>
+    <string name="usbip_no_usb_devices">未连接 USB 设备</string>
+    <string name="usbip_connect_device">连接 USB 设备</string>
+    <string name="usbip_detach">断开</string>
+    <string name="usbip_state_attaching">正在连接…</string>
+    <string name="usbip_state_ready">就绪</string>
+    <string name="usbip_state_error">错误</string>
+    <string name="usbip_state_idle">空闲</string>
+    <string name="usbip_state_attached">已连接</string>
+    <string name="usbip_state_unavailable">不可用</string>
+    <string name="usbip_identity">标识</string>
+    <string name="usbip_connection">连接</string>
+    <string name="usbip_class_interfaces">类别与接口</string>
+    <string name="usbip_product">产品</string>
+    <string name="usbip_serial">序列号</string>
+    <string name="usbip_version">版本</string>
+    <string name="usbip_bus_id">总线 ID</string>
+    <string name="usbip_backend">后端</string>
+    <string name="usbip_speed">速度</string>
+    <string name="usbip_bus_device">总线 / 设备</string>
+    <string name="usbip_device_class">设备类别</string>
+    <string name="usbip_configuration">配置</string>
+    <string name="usbip_interface">接口 %1$d</string>
+    <string name="usbip_notification_title">USB/IP 共享</string>
+    <string name="endpoint_status">状态</string>
+    <string name="endpoint_state">状态</string>
+    <string name="endpoint_authentication">身份验证</string>
+    <string name="endpoint_open_auth_url">打开身份验证链接</string>
+    <string name="endpoint_open_auth_url_qr_code">显示身份验证链接二维码</string>
+    <string name="endpoint_server">服务器</string>
+    <string name="endpoint_network">网络</string>
+    <string name="endpoint_cipher">加密算法</string>
+    <string name="endpoint_flavor">类型</string>
+    <string name="endpoint_transport">传输</string>
+    <string name="endpoint_connected">已连接</string>
+    <string name="endpoint_username">用户名</string>
+    <string name="endpoint_password">密码</string>
+    <string name="endpoint_response">响应</string>
+    <string name="endpoint_submit">提交</string>
+    <string name="endpoint_continue">继续</string>
+    <string name="endpoint_verifying">正在验证</string>
+    <plurals name="usbip_notification_text">
+        <item quantity="other">正在共享 %1$d 个 USB 设备</item>
+    </plurals>
+</resources>

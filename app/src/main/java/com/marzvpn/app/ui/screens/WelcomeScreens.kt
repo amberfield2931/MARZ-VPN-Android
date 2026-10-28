@@ -1,0 +1,363 @@
+package com.marzvpn.app.ui.screens
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.Send
+import androidx.compose.material.icons.rounded.Email
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.marzvpn.app.EmailUi
+import com.marzvpn.app.Links
+import com.marzvpn.app.TelegramUi
+import com.marzvpn.app.model.Catalog
+import com.marzvpn.app.model.PlanCode
+import com.marzvpn.app.model.PlanOffer
+import com.marzvpn.app.ui.BigButton
+import com.marzvpn.app.ui.BigOutlinedButton
+import com.marzvpn.app.ui.Bullet
+import com.marzvpn.app.ui.LimeButton
+import com.marzvpn.app.ui.MarzCard
+import com.marzvpn.app.ui.MarzLogo
+import com.marzvpn.app.ui.MarzScaffold
+import com.marzvpn.app.ui.PreviewBadge
+import com.marzvpn.app.ui.PreviewNotice
+import com.marzvpn.app.ui.ScreenColumn
+import com.marzvpn.app.ui.currentLocale
+import com.marzvpn.app.ui.ltr
+import com.marzvpn.app.ui.formatBytes
+import com.marzvpn.app.ui.safeArea
+import com.marzvpn.app.ui.theme.PriceStyle
+import io.nekohasekai.sfa.R
+import kotlinx.coroutines.delay
+import java.util.Locale
+
+@Composable
+fun WelcomeScreen(
+    onTelegram: () -> Unit,
+    onEmail: () -> Unit,
+    onPlans: () -> Unit,
+    onContinue: () -> Unit,
+) {
+    Surface(color = MaterialTheme.colorScheme.background) {
+        ScreenColumn(Modifier.safeArea(), horizontalAlignment = Alignment.CenterHorizontally) {
+            Spacer(Modifier.height(12.dp))
+            PreviewBadge()
+            MarzLogo(88.dp)
+            Text("MARZ VPN", style = MaterialTheme.typography.displaySmall, textAlign = TextAlign.Center)
+            Text(
+                stringResource(R.string.marz_welcome_tagline),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+            )
+            Column(Modifier.fillMaxWidth().padding(vertical = 4.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Bullet(stringResource(R.string.marz_welcome_point_one_tap))
+                Bullet(stringResource(R.string.marz_welcome_point_no_setup))
+                Bullet(stringResource(R.string.marz_welcome_point_one_account))
+            }
+            BigButton(stringResource(R.string.marz_login_telegram), onTelegram, icon = Icons.AutoMirrored.Rounded.Send)
+            BigOutlinedButton(stringResource(R.string.marz_login_email), onEmail, icon = Icons.Rounded.Email)
+            TrialCard()
+            LimeButton(stringResource(R.string.marz_view_plans), onPlans)
+            TextButton(onClick = onContinue) { Text(stringResource(R.string.marz_continue_without_login)) }
+            Spacer(Modifier.height(8.dp))
+        }
+    }
+}
+
+@Composable
+fun TrialCard() {
+    val locale = currentLocale()
+    MarzCard {
+        Text(stringResource(R.string.marz_trial_title), style = MaterialTheme.typography.titleLarge)
+        Text(
+            stringResource(R.string.marz_trial_terms, Catalog.trial.days, formatBytes(Catalog.trial.quotaBytes, locale)),
+            style = MaterialTheme.typography.bodyLarge,
+        )
+        Text(
+            stringResource(R.string.marz_trial_preview_note),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
+@Composable
+fun PlanCard(plan: PlanOffer, buttonText: String, onBuy: () -> Unit, enabled: Boolean = true, current: Boolean = false) {
+    val locale = currentLocale()
+    val unlimited = plan.code == PlanCode.Unlimited
+    MarzCard(highlighted = unlimited) {
+        // The badge sits above the name: a long badge never squeezes "Unlimited" onto two lines.
+        if (current || unlimited) {
+            Surface(shape = CircleShape, color = MaterialTheme.colorScheme.secondary, contentColor = MaterialTheme.colorScheme.onSecondary) {
+                Text(stringResource(if (current) R.string.marz_pay_your_plan else R.string.marz_plan_unlimited_badge), style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp))
+            }
+        }
+        Text(if (unlimited) "Unlimited" else "Basic", style = MaterialTheme.typography.headlineSmall)
+        Row(verticalAlignment = Alignment.Bottom) {
+            Text("$" + plan.priceUsd, style = PriceStyle)
+            Spacer(Modifier.width(6.dp))
+            Text(
+                stringResource(R.string.marz_plan_period, plan.periodDays),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(bottom = 6.dp),
+            )
+        }
+        val quota = plan.quotaBytes
+        Bullet(if (quota == null) stringResource(R.string.marz_plan_no_traffic_limit) else stringResource(R.string.marz_plan_traffic, formatBytes(quota, locale)))
+        Bullet(stringResource(R.string.marz_plan_all_servers))
+        if (unlimited) {
+            Bullet(stringResource(R.string.marz_plan_no_speed_cap))
+            Bullet(stringResource(R.string.marz_plan_ip3))
+        } else {
+            Bullet(stringResource(R.string.marz_plan_basic_bonus))
+        }
+        Spacer(Modifier.size(2.dp))
+        if (Links.webCheckoutAllowed) {
+            if (unlimited) LimeButton(buttonText, onBuy, enabled = enabled)
+            else BigButton(buttonText, onBuy, enabled = enabled)
+        } else {
+            BigButton(stringResource(R.string.marz_store_purchase_later), {}, enabled = false)
+        }
+    }
+}
+
+@Composable
+fun LoginChooserScreen(onTelegram: () -> Unit, onEmail: () -> Unit, onBack: () -> Unit) {
+    MarzScaffold(title = stringResource(R.string.marz_login), onBack = onBack) {
+        Text(stringResource(R.string.marz_login_chooser_text), style = MaterialTheme.typography.bodyLarge)
+        BigButton(stringResource(R.string.marz_login_telegram), onTelegram, icon = Icons.AutoMirrored.Rounded.Send)
+        Text(stringResource(R.string.marz_login_chooser_telegram_hint), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        BigOutlinedButton(stringResource(R.string.marz_login_email), onEmail, icon = Icons.Rounded.Email)
+        Text(stringResource(R.string.marz_login_chooser_email_hint), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+}
+
+@Composable
+fun TelegramLoginScreen(
+    available: Boolean,
+    state: TelegramUi,
+    onStart: () -> Unit,
+    onResume: () -> Unit,
+    onOpenTelegram: (String) -> Unit,
+    onCancel: () -> Unit,
+    onBack: () -> Unit,
+) {
+    // Returning to this screen (from Telegram, or after the app was restarted) continues the same request.
+    LaunchedEffect(Unit) { onResume() }
+    MarzScaffold(title = stringResource(R.string.marz_login_telegram), onBack = {
+        onCancel()
+        onBack()
+    }) {
+        when (state) {
+            is TelegramUi.Waiting -> TelegramCodeStep(state, onOpenTelegram, onCancel)
+            else -> {
+                Text(stringResource(R.string.marz_login_telegram_intro), style = MaterialTheme.typography.bodyLarge)
+                MarzCard {
+                    Step(1, stringResource(R.string.marz_login_telegram_step1))
+                    Step(2, stringResource(R.string.marz_login_telegram_step2))
+                    Step(3, stringResource(R.string.marz_login_telegram_step3))
+                }
+                if (state is TelegramUi.Failed) ErrorText(loginError(state.code))
+                BigButton(
+                    stringResource(if (state is TelegramUi.Failed) R.string.marz_login_telegram_new_code else R.string.marz_login_telegram_get_code),
+                    onStart,
+                    enabled = available && state !is TelegramUi.Starting,
+                )
+                if (state is TelegramUi.Starting) {
+                    CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 3.dp)
+                }
+                if (!available) PreviewNotice(stringResource(R.string.marz_login_unavailable_preview))
+            }
+        }
+    }
+}
+
+/** The number first, Telegram only on request: the user must be able to read and remember it. */
+@Composable
+private fun TelegramCodeStep(state: TelegramUi.Waiting, onOpenTelegram: (String) -> Unit, onCancel: () -> Unit) {
+    var now by remember { mutableStateOf(System.currentTimeMillis() / 1000) }
+    LaunchedEffect(state.expiresAtEpochSeconds) {
+        while (true) {
+            now = System.currentTimeMillis() / 1000
+            delay(1_000)
+        }
+    }
+    val left = (state.expiresAtEpochSeconds - now).coerceAtLeast(0)
+    Text(stringResource(R.string.marz_login_telegram_remember), style = MaterialTheme.typography.titleMedium)
+    MarzCard(highlighted = true) {
+        Text(stringResource(R.string.marz_login_telegram_code_title), style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+        Text(
+            state.matchCode, // digits are left-to-right in every locale; no isolate marks around them
+            style = PriceStyle.copy(fontSize = 80.sp, letterSpacing = 12.sp),
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+        )
+        Text(
+            stringResource(R.string.marz_login_telegram_expires_in, ltr(String.format(Locale.ROOT, "%d:%02d", left / 60, left % 60))),
+            style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center,
+        )
+    }
+    Text(stringResource(R.string.marz_login_telegram_code_hint), style = MaterialTheme.typography.bodyMedium)
+    BigButton(stringResource(R.string.marz_login_telegram_open), { onOpenTelegram(state.telegramUrl) }, icon = Icons.AutoMirrored.Rounded.Send)
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 3.dp)
+        Spacer(Modifier.width(12.dp))
+        Text(stringResource(R.string.marz_login_telegram_waiting), style = MaterialTheme.typography.titleMedium)
+    }
+    TextButton(onClick = onCancel) { Text(stringResource(R.string.marz_cancel)) }
+}
+
+@Composable
+fun EmailLoginScreen(
+    available: Boolean,
+    state: EmailUi,
+    onSend: (String) -> Unit,
+    onVerify: (String) -> Unit,
+    onResend: () -> Unit,
+    onChangeEmail: () -> Unit,
+    onBack: () -> Unit,
+) {
+    var email by rememberSaveable { mutableStateOf("") }
+    var code by remember { mutableStateOf("") }
+    MarzScaffold(title = stringResource(R.string.marz_login_email), onBack = onBack) {
+        when (state) {
+            is EmailUi.EnterCode -> {
+                Text(stringResource(R.string.marz_login_email_code_sent, ltr(state.email)), style = MaterialTheme.typography.bodyLarge)
+                OutlinedTextField(
+                    value = code,
+                    onValueChange = { v -> code = v.filter { it in '0'..'9' }.take(6) },
+                    label = { Text(stringResource(R.string.marz_login_email_code_label)) },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+                    visualTransformation = PasswordVisualTransformation(),
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                if (state.error != null) ErrorText(loginError(state.error, codeEntered = true))
+                BigButton(stringResource(R.string.marz_login_email_verify), { onVerify(code) }, enabled = code.length == 6 && !state.busy)
+                ResendCode(state, onResend = {
+                    code = ""
+                    onResend()
+                })
+                TextButton(onClick = {
+                    code = ""
+                    onChangeEmail()
+                }) { Text(stringResource(R.string.marz_login_email_change)) }
+                Text(stringResource(R.string.marz_login_email_hint), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            else -> {
+                Text(stringResource(R.string.marz_login_email_intro), style = MaterialTheme.typography.bodyLarge)
+                OutlinedTextField(
+                    value = email,
+                    onValueChange = { email = it.trim() },
+                    label = { Text(stringResource(R.string.marz_email_label)) },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                if (state is EmailUi.Failed) ErrorText(loginError(state.code))
+                BigButton(
+                    stringResource(R.string.marz_login_email_send_code),
+                    { onSend(email) },
+                    enabled = available && state !is EmailUi.Sending && email.contains('@') && email.length >= 5,
+                    icon = Icons.Rounded.Email,
+                )
+                Text(stringResource(R.string.marz_login_email_hint), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.marz_login_email_no_trial), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                if (!available) PreviewNotice(stringResource(R.string.marz_login_unavailable_preview))
+            }
+        }
+    }
+}
+
+@Composable
+internal fun ErrorText(text: String) {
+    Text(text, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.error)
+}
+
+/** "New code" on the code step: available a minute after the last request, with the wait shown. */
+@Composable
+private fun ResendCode(state: EmailUi.EnterCode, onResend: () -> Unit) {
+    var now by remember { mutableStateOf(android.os.SystemClock.elapsedRealtime()) }
+    val left = ((com.marzvpn.app.EMAIL_RESEND_MS - (now - state.sentAt)) / 1000).coerceAtLeast(0)
+    LaunchedEffect(state.sentAt, left > 0) {
+        while (android.os.SystemClock.elapsedRealtime() - state.sentAt < com.marzvpn.app.EMAIL_RESEND_MS) {
+            delay(1_000)
+            now = android.os.SystemClock.elapsedRealtime()
+        }
+    }
+    if (left > 0) {
+        Text(stringResource(R.string.marz_login_email_resend_wait, left.toInt()), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    } else {
+        TextButton(onClick = onResend, enabled = !state.busy) { Text(stringResource(R.string.marz_login_email_resend)) }
+    }
+}
+
+/** Stable API error codes to user-facing text; never shows raw codes. [codeEntered]: on the code step. */
+@Composable
+fun loginError(code: String, codeEntered: Boolean = false): String = stringResource(
+    when (code) {
+        // The code was not used up by a temporary failure: the same code can be sent again.
+        "upstream_unavailable", "internal_error" -> if (codeEntered) R.string.marz_error_email_retry_code else R.string.marz_error_network
+        "network" -> if (codeEntered) R.string.marz_error_email_retry_code else R.string.marz_error_network
+        "email_unavailable", "email_not_configured" -> R.string.marz_error_email_disabled
+        "code_expired" -> R.string.marz_error_email_code_expired
+        "login_expired" -> R.string.marz_error_expired
+        "login_rejected" -> R.string.marz_error_rejected
+        "login_match_failed" -> R.string.marz_error_match_failed
+        "pilot_closed" -> R.string.marz_error_pilot_closed
+        "email_login_disabled" -> R.string.marz_error_email_disabled
+        "storage_unavailable" -> R.string.marz_error_storage
+        "invalid_code" -> R.string.marz_error_invalid_code
+        "too_many_attempts", "rate_limited" -> R.string.marz_error_too_many
+        "invalid_email" -> R.string.marz_error_invalid_email
+        else -> R.string.marz_error_generic
+    },
+)
+
+@Composable
+private fun Step(number: Int, text: String) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Surface(shape = CircleShape, color = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(30.dp)) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                Text(String.format(currentLocale(), "%d", number), style = MaterialTheme.typography.titleSmall)
+            }
+        }
+        Spacer(Modifier.width(12.dp))
+        Text(text, style = MaterialTheme.typography.bodyLarge)
+    }
+}
