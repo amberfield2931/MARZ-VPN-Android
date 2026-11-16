@@ -12,6 +12,12 @@ This program comes with ABSOLUTELY NO WARRANTY.
 
 ## Releases and corresponding source
 
+**Current version: 1.0.3 (versionCode 1000390, Stable).** Its APK and complete corresponding source
+(`MARZ-VPN-Android-1.0.3-corresponding-source.tar`) are published in the GitHub release
+[`stable-2026-11-16`](https://github.com/amberfield2931/MARZ-VPN-Apps/releases/tag/stable-2026-11-16) of MARZ-VPN-Apps,
+together with SHA-256 sums. APK SHA-256: `ca1983484f093edc940f1797ffdefe5a8828e6df179e25d6bc32bd8d1bfd1577`.
+The table and notes below describe the first public build kept in this repository.
+
 | App version | APK | Corresponding source |
 |---|---|---|
 | 1.0.0-rc6 (versionCode 1000008), arm64-v8a | [marzvpn.com/android](https://marzvpn.com/android) | [Release `1.0.0-rc6-1000008`](https://github.com/amberfield2931/MARZ-VPN-Android/releases/tag/1.0.0-rc6-1000008) |
