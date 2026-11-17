@@ -1,6 +1,6 @@
 # MARZ VPN for Android — modification notice
 
-This is the corresponding source of **MARZ VPN 1.0.0 (1000091)** (package `com.marzvpn.app`),
+This is the corresponding source of **MARZ VPN 1.0.1 (1000092)** (package `com.marzvpn.app`),
 built from the app source tarball in this archive.
 
 MARZ VPN is a **modified version of sing-box-for-android (SFA)**:
@@ -51,3 +51,7 @@ No signing key, password, token or user data is part of this source.
 ## Changes in 1.0.0 (1000091) against 1.0.0-rc6 (1000008)
 
 `marz-changes-rc6-to-1.0.0.patch`: the app calls itself MARZ VPN in five inherited strings, an accurate open-source note, a source code row in Settings, full third-party notices in the APK. The engine `libbox` and every dependency are the same as in 1.0.0-rc6. `marz-changes-vs-upstream.patch` lists the changes up to rc6.
+
+## Changes in 1.0.1 (1000092) against 1.0.0 (1000091)
+
+`marz-changes-1.0.0-to-1.0.1.patch`: the connect button stays green while the VPN is left on, also without a network; a text says the VPN comes back by itself; a mobile IMS network no longer counts as internet. The engine `libbox` and every dependency are the same as in 1.0.0.

@@ -20,12 +20,19 @@ object NetworkIdentity {
     }
 
     /** The phone's own network (not the VPN) is online, as Android itself validated it. */
+    /** A mobile IMS network is validated even with mobile data off: it carries calls, not internet. */
+    fun countsAsInternet(isVpn: Boolean, hasInternet: Boolean, validated: Boolean): Boolean = !isVpn && hasInternet && validated
+
     fun underlyingOnline(context: Context): Boolean {
         val cm = context.getSystemService(ConnectivityManager::class.java) ?: return false
         @Suppress("DEPRECATION")
         return cm.allNetworks.any { n ->
             cm.getNetworkCapabilities(n)?.let {
-                !it.hasTransport(NetworkCapabilities.TRANSPORT_VPN) && it.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+                countsAsInternet(
+                    isVpn = it.hasTransport(NetworkCapabilities.TRANSPORT_VPN),
+                    hasInternet = it.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET),
+                    validated = it.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED),
+                )
             } == true
         }
     }

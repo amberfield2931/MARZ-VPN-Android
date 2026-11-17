@@ -145,23 +145,23 @@ private fun ConnectSection(
     val colors = LocalStatusColors.current
     val canConnect = source != ConfigSource.None || state != EngineState.Disconnected
     val connected = state == EngineState.Connected
-    // The service runs, but checks through the tunnel confirmed that no data gets through.
-    val noData = connected && (traffic == TrafficState.Lost || traffic == TrafficState.NoNetwork)
+    // The service runs, but checks through the tunnel confirmed that no data gets through. The indicator stays on:
+    // the user left the VPN on and it comes back by itself. Only the text below says what is happening.
+    val noData = connected && traffic == TrafficState.Lost
     val busy = state == EngineState.Connecting || state == EngineState.Disconnecting || state == EngineState.Unknown
+    val indicator = indicatorColor(canConnect, state, traffic)
     val container by animateColorAsState(
-        when {
-            !canConnect -> MaterialTheme.colorScheme.surfaceVariant
-            noData -> MaterialTheme.colorScheme.error
-            connected -> colors.connected
-            else -> colors.idle
+        when (indicator) {
+            IndicatorColor.Unavailable -> MaterialTheme.colorScheme.surfaceVariant
+            IndicatorColor.Connected -> colors.connected
+            IndicatorColor.Idle -> colors.idle
         },
         label = "connect-color",
     )
-    val content = when {
-        !canConnect -> MaterialTheme.colorScheme.onSurfaceVariant
-        noData -> MaterialTheme.colorScheme.onError
-        connected -> colors.onConnected
-        else -> colors.onIdle
+    val content = when (indicator) {
+        IndicatorColor.Unavailable -> MaterialTheme.colorScheme.onSurfaceVariant
+        IndicatorColor.Connected -> colors.onConnected
+        IndicatorColor.Idle -> colors.onIdle
     }
     val pulse = rememberInfiniteTransition(label = "pulse")
     val pulseAlpha by pulse.animateFloat(1f, 0.55f, infiniteRepeatable(tween(700), RepeatMode.Reverse), label = "pulse-alpha")
@@ -203,6 +203,7 @@ private fun ConnectSection(
         val hint = when {
             error != null -> stringResource(R.string.marz_connect_error, error)
             connected && traffic == TrafficState.Lost -> stringResource(R.string.marz_no_traffic_hint)
+            connected && traffic == TrafficState.NoNetwork -> stringResource(R.string.marz_no_network_hint)
             source == ConfigSource.None && account is AccountState.SignedIn -> stringResource(R.string.marz_connect_no_plan)
             source == ConfigSource.None -> stringResource(R.string.marz_connect_need_login)
             source == ConfigSource.EngineerProfile -> stringResource(R.string.marz_connect_engineer_profile)

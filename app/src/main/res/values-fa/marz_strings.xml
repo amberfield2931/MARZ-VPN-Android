@@ -81,6 +81,7 @@
     <string name="marz_status_connected">متصل</string>
     <string name="marz_status_no_traffic">اینترنت از طریق VPN کار نمی‌کند</string>
     <string name="marz_no_traffic_hint">VPN روشن است، اما داده‌ها عبور نمی‌کنند. مسیر دیگری انتخاب کنید یا دوباره وصل شوید.</string>
+    <string name="marz_no_network_hint">VPN روشن می‌ماند و با بازگشت شبکه خودش دوباره وصل می‌شود.</string>
     <string name="marz_status_no_network">اتصال اینترنت وجود ندارد</string>
     <string name="marz_status_disconnecting">در حال قطع اتصال…</string>
     <string name="marz_connect_need_login">برای دریافت تنظیمات اتصال وارد شوید</string>

@@ -53,7 +53,7 @@ def main():
              JAVA_HOME='/mnt/marz-lab/MARZ-VPN-app/toolchain/jdk')
     version={k:v for k,v in (line.split('=',1) for line in (ROOT/'version.properties').read_text().splitlines() if '=' in line)}
     name=version['MARZ_VERSION_NAME'];code=int(version['MARZ_VERSION_CODE']);expected=certificate(RC5)
-    if code<=1000005 or not re.fullmatch(r'1\.0\.0(-rc\d+)?',name):raise RuntimeError('release_version_not_incremented')
+    if code<=1000005 or not re.fullmatch(r'1\.\d+\.\d+(-rc\d+)?',name):raise RuntimeError('release_version_not_incremented')
     apks=sorted((ROOT/'app/build/outputs/apk/other/release').glob('*.apk'))
     if not apks:raise RuntimeError('no_release_apks')
     out.mkdir(mode=0o700);records=[]

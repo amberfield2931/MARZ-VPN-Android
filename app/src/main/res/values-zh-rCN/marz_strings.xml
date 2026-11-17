@@ -81,6 +81,7 @@
     <string name="marz_status_connected">已连接</string>
     <string name="marz_status_no_traffic">VPN 无法访问互联网</string>
     <string name="marz_no_traffic_hint">VPN 已开启，但数据无法通过。请选择其他线路或重新连接。</string>
+    <string name="marz_no_network_hint">VPN 保持开启，网络恢复后会自动恢复。</string>
     <string name="marz_status_no_network">没有网络连接</string>
     <string name="marz_status_disconnecting">正在断开…</string>
     <string name="marz_connect_need_login">登录后即可获取连接设置</string>

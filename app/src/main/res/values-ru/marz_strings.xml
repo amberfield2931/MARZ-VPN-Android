@@ -81,6 +81,7 @@
     <string name="marz_status_connected">Подключено</string>
     <string name="marz_status_no_traffic">Нет интернета через VPN</string>
     <string name="marz_no_traffic_hint">VPN включён, но данные не проходят. Выберите другой маршрут или переподключитесь.</string>
+    <string name="marz_no_network_hint">VPN остаётся включённым и восстановится сам, когда появится сеть.</string>
     <string name="marz_status_no_network">Нет подключения к интернету</string>
     <string name="marz_status_disconnecting">Отключение…</string>
     <string name="marz_connect_need_login">Войдите, чтобы получить настройки подключения</string>

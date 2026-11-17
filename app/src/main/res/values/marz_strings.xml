@@ -81,6 +81,7 @@
     <string name="marz_status_connected">Connected</string>
     <string name="marz_status_no_traffic">No internet through the VPN</string>
     <string name="marz_no_traffic_hint">The VPN is on, but data is not getting through. Choose another route or reconnect.</string>
+    <string name="marz_no_network_hint">The VPN stays on and comes back by itself when the network returns.</string>
     <string name="marz_status_no_network">No internet connection</string>
     <string name="marz_status_disconnecting">Disconnecting…</string>
     <string name="marz_connect_need_login">Sign in to get your connection settings</string>
