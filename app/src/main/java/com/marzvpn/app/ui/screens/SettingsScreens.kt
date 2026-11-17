@@ -260,6 +260,10 @@ fun SettingsScreen(
             SettingsRow(Icons.Rounded.Description, stringResource(R.string.marz_license_title), stringResource(R.string.marz_license_value)) {
                 Links.openInBrowserTab(context, Links.LICENSE)
             }
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            SettingsRow(Icons.Rounded.Description, stringResource(R.string.marz_source_code_title), stringResource(R.string.marz_source_code_value)) {
+                Links.openInBrowserTab(context, Links.SOURCE)
+            }
             Text(stringResource(R.string.marz_open_source_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             if (onDeveloper != null && developerUnlocked) {
                 HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)

@@ -17,6 +17,7 @@ object Links {
     const val BOT = "https://t.me/MarzReality_bot"
     const val SUPPORT_EMAIL = "support@marzvpn.com"
     const val LICENSE = "https://www.gnu.org/licenses/gpl-3.0.html"
+    const val SOURCE = "$SITE/android#source"
 
     val channel: Channel = if (BuildConfig.MARZ_CHANNEL == "play") Channel.Play else Channel.Web
 

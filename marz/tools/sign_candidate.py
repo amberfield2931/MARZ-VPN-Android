@@ -17,7 +17,7 @@ import zipfile
 ROOT=Path(__file__).resolve().parents[2]
 BT=Path('/mnt/marz-lab/MARZ-VPN-app/toolchain/android-sdk/build-tools/37.0.0')
 SIGNING=Path('/mnt/marz-lab/MARZ-VPN/private/android-release-signing')
-RC5=Path('/mnt/marz-lab/MARZ-VPN-app/dist/release-1.0.0-rc5/MARZ-VPN-1.0.0-rc5-arm64-v8a.apk')
+RC5=Path('/mnt/marz-lab/MARZ-VPN-app/dist/release-1.0.0-rc6-checkout-1000008/MARZ-VPN-1.0.0-rc6-arm64-v8a.apk')  # the certificate reference: the public RC6
 
 
 def checked(args,env=None):
@@ -53,7 +53,7 @@ def main():
              JAVA_HOME='/mnt/marz-lab/MARZ-VPN-app/toolchain/jdk')
     version={k:v for k,v in (line.split('=',1) for line in (ROOT/'version.properties').read_text().splitlines() if '=' in line)}
     name=version['MARZ_VERSION_NAME'];code=int(version['MARZ_VERSION_CODE']);expected=certificate(RC5)
-    if code<=1000005 or not re.fullmatch(r'1\.0\.0-rc\d+',name):raise RuntimeError('release_version_not_incremented')
+    if code<=1000005 or not re.fullmatch(r'1\.0\.0(-rc\d+)?',name):raise RuntimeError('release_version_not_incremented')
     apks=sorted((ROOT/'app/build/outputs/apk/other/release').glob('*.apk'))
     if not apks:raise RuntimeError('no_release_apks')
     out.mkdir(mode=0o700);records=[]
@@ -74,8 +74,8 @@ def main():
             raise RuntimeError('wrong_release_endpoint')
         records.append(dict(file=target.name,sha256=hashlib.sha256(target.read_bytes()).hexdigest(),bytes=target.stat().st_size))
     manifest=dict(version=name,versionCode=code,package='com.marzvpn.app',certificateSha256=expected,
-                  rc5CertificateMatches=True,baselineVersionCode=1000005,baselineSha256=hashlib.sha256(RC5.read_bytes()).hexdigest(),productionApi=True,debuggable=False,verified=True,
-                  emailLoginPublic=False,published=False,distributionApproved=False,offlineKeyBackupsOwnerConfirmed=False,
+                  rc5CertificateMatches=True,baselineVersionCode=1000008,baselineSha256=hashlib.sha256(RC5.read_bytes()).hexdigest(),productionApi=True,debuggable=False,verified=True,
+                  emailLoginPublic=True,published=False,distributionApproved=False,offlineKeyBackupsOwnerConfirmed=False,
                   sourceCommit=checked(['git','rev-parse','HEAD']).strip(),artifacts=records)
     (out/'release-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     (out/'SHA256SUMS').write_text(''.join(r['sha256']+'  '+r['file']+'\n' for r in records))

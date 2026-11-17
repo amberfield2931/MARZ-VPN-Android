@@ -1,7 +1,7 @@
 # MARZ VPN for Android — modification notice
 
-This is the corresponding source of **MARZ VPN 1.0.0-rc6 (1000008)** (package `com.marzvpn.app`),
-built from MARZ commit `be4b72c34a4349a39b72ab2cb679663d55a5c468`.
+This is the corresponding source of **MARZ VPN 1.0.0 (1000091)** (package `com.marzvpn.app`),
+built from the app source tarball in this archive.
 
 MARZ VPN is a **modified version of sing-box-for-android (SFA)**:
 
@@ -47,3 +47,7 @@ Removed from this archive (not used by the build): the upstream test keystore `a
 device-lab test scripts `marz/ui-checks`, `marz/diag` and internal release reports in `marz/`
 (`marz/BUILD.md` still mentions some of them; `BUILD-RELEASE.md` is the build guide for this source).
 No signing key, password, token or user data is part of this source.
+
+## Changes in 1.0.0 (1000091) against 1.0.0-rc6 (1000008)
+
+`marz-changes-rc6-to-1.0.0.patch`: the app calls itself MARZ VPN in five inherited strings, an accurate open-source note, a source code row in Settings, full third-party notices in the APK. The engine `libbox` and every dependency are the same as in 1.0.0-rc6. `marz-changes-vs-upstream.patch` lists the changes up to rc6.

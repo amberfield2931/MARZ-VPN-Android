@@ -143,7 +143,9 @@
     <string name="marz_identity_telegram">Telegram: %1$s</string>
     <string name="marz_identity_email">Email: %1$s</string>
     <string name="marz_version">Version %1$s</string>
-    <string name="marz_open_source_note">MARZ VPN uses open-source software under GPL-3.0. The source code will be published.</string>
+    <string name="marz_open_source_note">MARZ VPN is free software under GPL-3.0-or-later, a modified version of sing-box-for-android by nekohasekai, and uses the sing-box engine. It is not affiliated with or endorsed by SagerNet. It comes with ABSOLUTELY NO WARRANTY.</string>
+    <string name="marz_source_code_title">Source code</string>
+    <string name="marz_source_code_value">Corresponding source and third-party licenses</string>
     <string name="marz_developer_title">Developer tools</string>
     <string name="marz_developer_unlocked">Developer tools enabled</string>
     <string name="marz_license_title">License</string>

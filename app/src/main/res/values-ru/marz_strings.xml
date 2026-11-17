@@ -143,7 +143,9 @@
     <string name="marz_identity_telegram">Telegram: %1$s</string>
     <string name="marz_identity_email">Email: %1$s</string>
     <string name="marz_version">Версия %1$s</string>
-    <string name="marz_open_source_note">MARZ VPN использует открытое ПО по лицензии GPL-3.0. Исходный код будет опубликован.</string>
+    <string name="marz_open_source_note">MARZ VPN — свободная программа под лицензией GPL-3.0-or-later, изменённая версия sing-box-for-android (автор nekohasekai), использует движок sing-box. Проект не связан с SagerNet и не одобрен им. Программа предоставляется БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ.</string>
+    <string name="marz_source_code_title">Исходный код</string>
+    <string name="marz_source_code_value">Соответствующие исходники и сторонние лицензии</string>
     <string name="marz_developer_title">Для разработчика</string>
     <string name="marz_developer_unlocked">Инструменты разработчика включены</string>
     <string name="marz_license_title">Лицензия</string>
