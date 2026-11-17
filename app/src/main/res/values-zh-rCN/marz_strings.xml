@@ -237,4 +237,12 @@
     <string name="marz_pay_new_link">获取新链接</string>
     <string name="marz_pay_no_order">尚未创建订单，也未付款。您可以返回付款或选择其他套餐。</string>
     <string name="marz_pay_earlier_kept">如果您已支付之前的账单，它会被入账，无需重复付款。</string>
+    <string name="marz_update_check">检查更新</string>
+    <string name="marz_update_checking">正在检查…</string>
+    <string name="marz_update_latest">已是最新版本。</string>
+    <string name="marz_update_available">有新版本可用：%1$s</string>
+    <string name="marz_update_download">下载</string>
+    <string name="marz_update_later">稍后</string>
+    <string name="marz_update_failed">无法检查更新。</string>
+    <string name="marz_update_retry">重试</string>
 </resources>

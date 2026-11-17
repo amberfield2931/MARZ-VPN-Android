@@ -1,17 +1,17 @@
-# MARZ VPN for Android — source code of 1.0.1 (versionCode 1000092)
+# MARZ VPN for Android — source code of 1.0.2 (versionCode 1000093)
 
-This commit holds the app source of **MARZ VPN for Android 1.0.1** (versionCode 1000092), package
+This commit holds the app source of **MARZ VPN for Android 1.0.2** (versionCode 1000093), package
 `com.marzvpn.app`. **It is not the current version** — the current one is on the
 [`main`](https://github.com/amberfield2931/MARZ-VPN-Android) branch.
 
 | | |
 |---|---|
-| Git tag | `1.0.1-1000092` |
-| Release with the APK and the complete corresponding source | [MARZ-VPN-Apps `stable-2026-11-04`](https://github.com/amberfield2931/MARZ-VPN-Apps/releases/tag/stable-2026-11-04) |
-| `MARZ-VPN-Android-1.0.1-corresponding-source.tar` SHA-256 | `6566f631dfae5fc22792542dc042cea038a93801ce4fdeb5eac7effa1a3b990c` |
-| `MARZ-VPN-Android-1.0.1.apk` (arm64-v8a) SHA-256 | `183921b6bc91812d289413a9b4d656d8526662fa0bd0e9f150cf47cc1c296800` |
+| Git tag | `1.0.2-1000093` |
+| Release with the APK and the complete corresponding source | [MARZ-VPN-Apps `stable-2026-11-05-2`](https://github.com/amberfield2931/MARZ-VPN-Apps/releases/tag/stable-2026-11-05-2) |
+| `MARZ-VPN-Android-1.0.2-corresponding-source.tar` SHA-256 | `e9ac7a12a69ce190f5d037e0a76b601f3fc7b763e20f0c3e7e4071f299ffdc59` |
+| `MARZ-VPN-Android-1.0.2.apk` (arm64-v8a) SHA-256 | `13c9acfdd98d128b0b919a57ce45df087394de889959edf1268c7214f8b17de6` |
 | APK signing certificate SHA-256 | `341f9b40054fafe26ce3afd2cd633f727d0aef1045d641b96c4c59990a10ff6a` |
-| MARZ development commit | `65e831e8e395eb069d795996e0492a9d1b034ff1` |
+| MARZ development commit | `08e6b8100e8d73e52be48a81e1b446c9f861f374` |
 
 The files of this tree are the app archive of that corresponding-source tar, unchanged, except:
 - `README.md` (this file; the upstream README is `README.upstream.md`);

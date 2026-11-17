@@ -10,6 +10,7 @@ import com.marzvpn.app.vpn.EngineState
 import io.nekohasekai.sfa.R
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -48,6 +49,8 @@ private object Route {
 fun MarzApp(vm: MarzViewModel, onToggleConnection: () -> Unit, onEngineTools: () -> Unit) {
     val nav = rememberNavController()
     val account by vm.account.collectAsStateWithLifecycle()
+    val update by vm.update.collectAsStateWithLifecycle()
+    var updateLater by rememberSaveable { androidx.compose.runtime.mutableStateOf<String?>(null) }
     val theme by vm.theme.collectAsStateWithLifecycle()
     val engineState by vm.engineState.collectAsStateWithLifecycle()
     val engineError by vm.engineError.collectAsStateWithLifecycle()
@@ -125,7 +128,11 @@ fun MarzApp(vm: MarzViewModel, onToggleConnection: () -> Unit, onEngineTools: ()
             )
         }
         composable(Route.HOME) {
+            val found = (update as? com.marzvpn.app.update.UpdateUi.Available)?.version
             HomeScreen(
+                updateVersion = found?.takeIf { it != updateLater },
+                onUpdateDownload = { Links.open(context, Links.androidPageUrl(locale)) },
+                onUpdateLater = { updateLater = found },
                 account = account,
                 engineState = engineState,
                 engineError = engineError,
@@ -223,6 +230,9 @@ fun MarzApp(vm: MarzViewModel, onToggleConnection: () -> Unit, onEngineTools: ()
             LaunchedEffect(Unit) { vm.refreshEmailLink() }
             androidx.compose.runtime.DisposableEffect(Unit) { onDispose { vm.emailLink.reset() } }
             SettingsScreen(
+                update = update,
+                onCheckUpdates = if (vm.updateCheckAvailable) vm::checkUpdates else null,
+                onUpdateDownload = { Links.open(context, Links.androidPageUrl(locale)) },
                 account = account,
                 theme = theme,
                 onTheme = vm::setTheme,

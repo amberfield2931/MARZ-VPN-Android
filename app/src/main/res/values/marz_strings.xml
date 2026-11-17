@@ -237,4 +237,12 @@
     <string name="marz_pay_new_link">Get a new link</string>
     <string name="marz_pay_no_order">No order has been created yet, nothing is paid. You can return to payment or choose another plan.</string>
     <string name="marz_pay_earlier_kept">If you have already paid an earlier invoice, it will be credited: there is no need to pay again.</string>
+    <string name="marz_update_check">Check for updates</string>
+    <string name="marz_update_checking">Checking…</string>
+    <string name="marz_update_latest">You have the latest version.</string>
+    <string name="marz_update_available">New version available: %1$s</string>
+    <string name="marz_update_download">Download</string>
+    <string name="marz_update_later">Later</string>
+    <string name="marz_update_failed">Could not check for updates.</string>
+    <string name="marz_update_retry">Try again</string>
 </resources>

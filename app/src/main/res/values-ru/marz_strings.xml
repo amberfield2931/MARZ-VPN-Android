@@ -237,4 +237,12 @@
     <string name="marz_pay_new_link">Получить новую ссылку</string>
     <string name="marz_pay_no_order">Заказ ещё не создан, ничего не оплачено. Можно вернуться к оплате или выбрать другой тариф.</string>
     <string name="marz_pay_earlier_kept">Если вы уже оплатили предыдущий счёт, он будет зачислен — платить повторно не нужно.</string>
+    <string name="marz_update_check">Проверить обновления</string>
+    <string name="marz_update_checking">Проверяем…</string>
+    <string name="marz_update_latest">Установлена последняя версия.</string>
+    <string name="marz_update_available">Доступна новая версия: %1$s</string>
+    <string name="marz_update_download">Скачать</string>
+    <string name="marz_update_later">Позже</string>
+    <string name="marz_update_failed">Не удалось проверить обновления.</string>
+    <string name="marz_update_retry">Повторить</string>
 </resources>

@@ -105,10 +105,12 @@ android {
             versionNameSuffix = "-marz-debug"
             // Lab App API reached through `adb reverse tcp:8787 tcp:8787` (emulator and USB phone).
             buildConfigField("String", "MARZ_APP_API_URL", "\"http://127.0.0.1:8787\"")
+            buildConfigField("String", "MARZ_UPDATE_URL", "\"http://127.0.0.1:8788/updates/manifest.json\"")
         }
         release {
             // Production: the App API over HTTPS with pinned CAs (src/release), no developer tools, R8.
             buildConfigField("String", "MARZ_APP_API_URL", "\"https://app-api.marzvpn.com\"")
+            buildConfigField("String", "MARZ_UPDATE_URL", "\"https://marzvpn.com/updates/manifest.json\"")
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             // Without the MARZ release key the APK stays unsigned (not installable) instead of being

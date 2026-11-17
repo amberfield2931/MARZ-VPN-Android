@@ -43,6 +43,9 @@ object Links {
     fun siteUrl(locale: Locale) = "$SITE${sitePrefix(locale)}/"
     fun termsUrl(locale: Locale) = "$SITE${sitePrefix(locale)}/terms"
 
+    /** The official Android page: the user downloads from there. */
+    fun androidPageUrl(locale: Locale) = "$SITE${sitePrefix(locale)}/android"
+
     fun openInBrowserTab(context: Context, url: String) {
         try {
             CustomTabsIntent.Builder().setShowTitle(true).build().launchUrl(context, Uri.parse(url))

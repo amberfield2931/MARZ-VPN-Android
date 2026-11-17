@@ -195,6 +195,10 @@ fun SettingsScreen(
     onDeveloper: (() -> Unit)?,
     developerUnlocked: Boolean,
     onVersionTap: () -> Unit,
+    update: com.marzvpn.app.update.UpdateUi = com.marzvpn.app.update.UpdateUi.Idle,
+    /** Null in a store build: the store updates it. */
+    onCheckUpdates: (() -> Unit)? = null,
+    onUpdateDownload: () -> Unit = {},
     onBack: () -> Unit,
 ) {
     val context = LocalContext.current
@@ -256,6 +260,9 @@ fun SettingsScreen(
                     .then(if (onDeveloper != null) Modifier.clickable(onClick = onVersionTap) else Modifier)
                     .padding(vertical = 4.dp),
             )
+            if (onCheckUpdates != null) {
+                UpdateSection(update, onCheckUpdates, onUpdateDownload)
+            }
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
             SettingsRow(Icons.Rounded.Description, stringResource(R.string.marz_license_title), stringResource(R.string.marz_license_value)) {
                 Links.openInBrowserTab(context, Links.LICENSE)
@@ -461,6 +468,32 @@ fun DiagnosticsScreen(
             },
             dismissButton = { TextButton(onClick = { confirmTools = false }) { Text(stringResource(R.string.marz_cancel)) } },
         )
+    }
+}
+
+@Composable
+private fun UpdateSection(update: com.marzvpn.app.update.UpdateUi, onCheck: () -> Unit, onDownload: () -> Unit) {
+    val check = stringResource(R.string.marz_update_check)
+    val body = MaterialTheme.typography.bodyMedium
+    when (update) {
+        com.marzvpn.app.update.UpdateUi.Idle -> com.marzvpn.app.ui.BigOutlinedButton(check, onCheck)
+        com.marzvpn.app.update.UpdateUi.Checking -> {
+            Text(stringResource(R.string.marz_update_checking), style = body)
+            com.marzvpn.app.ui.BigOutlinedButton(check, onCheck, enabled = false)
+        }
+        com.marzvpn.app.update.UpdateUi.Latest -> {
+            Text(stringResource(R.string.marz_update_latest), style = body)
+            com.marzvpn.app.ui.BigOutlinedButton(check, onCheck)
+        }
+        is com.marzvpn.app.update.UpdateUi.Available -> {
+            Text(stringResource(R.string.marz_update_available, ltr(update.version)), style = MaterialTheme.typography.titleSmall)
+            com.marzvpn.app.ui.BigButton(stringResource(R.string.marz_update_download), onDownload)
+            com.marzvpn.app.ui.BigOutlinedButton(check, onCheck)
+        }
+        com.marzvpn.app.update.UpdateUi.Failed -> {
+            Text(stringResource(R.string.marz_update_failed), style = body)
+            com.marzvpn.app.ui.BigOutlinedButton(stringResource(R.string.marz_update_retry), onCheck)
+        }
     }
 }
 

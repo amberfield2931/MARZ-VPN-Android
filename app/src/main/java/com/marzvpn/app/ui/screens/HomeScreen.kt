@@ -88,6 +88,10 @@ fun HomeScreen(
     onPlans: (CheckoutAction) -> Unit,
     onLogin: () -> Unit,
     onSettings: () -> Unit,
+    /** A newer published version to mention, or null. */
+    updateVersion: String? = null,
+    onUpdateDownload: () -> Unit = {},
+    onUpdateLater: () -> Unit = {},
 ) {
     MarzScaffold(
         title = null,
@@ -110,6 +114,7 @@ fun HomeScreen(
                     }
                     Box(Modifier.weight(1f).fillMaxHeight()) {
                         ScreenColumn {
+                            if (updateVersion != null) UpdateNotice(updateVersion, onUpdateDownload, onUpdateLater)
                             if (sample) PreviewNotice(stringResource(R.string.marz_sample_banner))
                             SyncNotice(syncError, sample, onLogin)
                             ServerRow(servers, serverChoice, engineState == EngineState.Connected, activeServerId, routeMissing, liveMs, onServers)
@@ -120,6 +125,7 @@ fun HomeScreen(
                 }
             } else {
                 ScreenColumn {
+                    if (updateVersion != null) UpdateNotice(updateVersion, onUpdateDownload, onUpdateLater)
                     if (sample) PreviewNotice(stringResource(R.string.marz_sample_banner))
                     SyncNotice(syncError, sample, onLogin)
                     ConnectSection(account, engineState, traffic, engineError, configSource, onToggle)
@@ -130,6 +136,15 @@ fun HomeScreen(
             }
         },
     )
+}
+
+@Composable
+private fun UpdateNotice(version: String, onDownload: () -> Unit, onLater: () -> Unit) {
+    MarzCard {
+        Text(stringResource(R.string.marz_update_available, ltr(version)), style = MaterialTheme.typography.titleSmall)
+        BigButton(stringResource(R.string.marz_update_download), onDownload)
+        BigOutlinedButton(stringResource(R.string.marz_update_later), onLater)
+    }
 }
 
 @Composable

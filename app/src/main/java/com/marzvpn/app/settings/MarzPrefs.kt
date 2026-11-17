@@ -104,7 +104,26 @@ class MarzPrefs(context: Context) {
         get() = prefs.getString(KEY_API_URL, null)
         set(value) = prefs.edit().putString(KEY_API_URL, value).apply()
 
+    /** When the update check last ran, wall clock ms. 0: never. */
+    var updateCheckedAt: Long
+        get() = prefs.getLong(KEY_UPDATE_AT, 0)
+        set(value) = prefs.edit().putLong(KEY_UPDATE_AT, value).apply()
+
+    /** A newer published build found by the last check, shown until a check says otherwise. */
+    val updateFound: Pair<String, Long>?
+        get() {
+            val name = prefs.getString(KEY_UPDATE_NAME, null) ?: return null
+            return name to prefs.getLong(KEY_UPDATE_CODE, 0)
+        }
+
+    fun setUpdateFound(name: String?, code: Long) {
+        prefs.edit().putString(KEY_UPDATE_NAME, name).putLong(KEY_UPDATE_CODE, code).apply()
+    }
+
     companion object {
+        private const val KEY_UPDATE_AT = "update_checked_at"
+        private const val KEY_UPDATE_NAME = "update_found_name"
+        private const val KEY_UPDATE_CODE = "update_found_code"
         private const val KEY_API_URL = "api_url_override"
         private const val KEY_THEME = "theme"
         private const val KEY_WELCOME = "welcome_seen"

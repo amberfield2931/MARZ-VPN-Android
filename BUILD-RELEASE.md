@@ -9,7 +9,7 @@ own key and install it; nothing in the app or the MARZ service checks the signin
 
 | File | What |
 |---|---|
-| `MARZ-VPN-1.0.1-1000092-source.tar.gz` | the Android app (MARZ commit in `source-provenance.json`), `MODIFICATIONS.md` |
+| `MARZ-VPN-1.0.2-1000093-source.tar.gz` | the Android app (MARZ commit in `source-provenance.json`), `MODIFICATIONS.md` |
 | `sing-box-v1.14.3-source.tar.gz` | sing-box `v1.14.3` (`7054cac5…11b1`) with the `go.sum` used for the build |
 | `go-modules-sing-box-v1.14.3.tar.gz` | every Go module the engine links, in `GOPROXY=file://` layout (checked against `go.sum`) |
 | `gomobile-v0.1.13-source.tar.gz` | `github.com/sagernet/gomobile` v0.1.13 |
@@ -57,7 +57,7 @@ from naiveproxy/Chromium (cronet-go commit `049f2909701ca088c9569f6b303bba5376a2
 ## 2. APK
 
 ```sh
-cd $B && tar xzf MARZ-VPN-1.0.1-1000092-source.tar.gz && cd MARZ-VPN
+cd $B && tar xzf MARZ-VPN-1.0.2-1000093-source.tar.gz && cd MARZ-VPN
 mkdir -p app/libs && cp $B/build/sing-box/libbox.aar app/libs/
 echo "sdk.dir=<sdk>" > local.properties
 JAVA_HOME=<jdk21> ./gradlew :app:assembleOtherRelease

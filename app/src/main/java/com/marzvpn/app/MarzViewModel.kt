@@ -1,5 +1,9 @@
 package com.marzvpn.app
 
+import com.marzvpn.app.update.UpdateClient
+import com.marzvpn.app.update.UpdateResult
+import com.marzvpn.app.update.UpdateRules
+import com.marzvpn.app.update.UpdateUi
 import android.app.Activity
 import android.content.Intent
 import androidx.lifecycle.AndroidViewModel
@@ -251,8 +255,52 @@ class MarzViewModel(app: android.app.Application) : AndroidViewModel(app) {
     val developerUnlocked: StateFlow<Boolean> = _developerUnlocked.asStateFlow()
     private var versionTaps = 0
 
+    /** Only the APK from marzvpn.com checks: a store updates its own builds. */
+    val updateCheckAvailable: Boolean = Links.channel == Channel.Web
+    private val updateClient = UpdateClient(BuildConfig.MARZ_UPDATE_URL)
+    private val updateBusy = java.util.concurrent.atomic.AtomicBoolean(false)
+    private val _update = MutableStateFlow<UpdateUi>(
+        prefs.updateFound?.takeIf { updateCheckAvailable && it.second > BuildConfig.VERSION_CODE }?.let { UpdateUi.Available(it.first) } ?: UpdateUi.Idle,
+    )
+    val update: StateFlow<UpdateUi> = _update.asStateFlow()
+
+    /** The Settings button. */
+    fun checkUpdates() {
+        if (updateCheckAvailable) viewModelScope.launch { runUpdateCheck(byUser = true) }
+    }
+
+    private suspend fun runUpdateCheck(byUser: Boolean) {
+        if (!updateBusy.compareAndSet(false, true)) return
+        try {
+            prefs.updateCheckedAt = System.currentTimeMillis()
+            if (byUser) _update.value = UpdateUi.Checking
+            val result = updateClient.fetch()?.let { UpdateRules.parse(it, BuildConfig.VERSION_CODE.toLong()) } ?: UpdateResult.Invalid
+            when (result) {
+                is UpdateResult.Newer -> {
+                    prefs.setUpdateFound(result.version, result.code)
+                    _update.value = UpdateUi.Available(result.version)
+                }
+                UpdateResult.UpToDate -> {
+                    prefs.setUpdateFound(null, 0)
+                    _update.value = UpdateUi.Latest
+                }
+                // The automatic check fails quietly; the button tells.
+                UpdateResult.Invalid -> if (byUser) _update.value = UpdateUi.Failed
+            }
+        } finally {
+            updateBusy.set(false)
+        }
+    }
+
     init {
         engine.bind()
+        // Once at start, at most once in 24 hours, in this process only: no background service or scheduled job.
+        if (updateCheckAvailable && UpdateRules.due(prefs.updateCheckedAt, System.currentTimeMillis())) {
+            viewModelScope.launch {
+                kotlinx.coroutines.delay(5_000)
+                runUpdateCheck(byUser = false)
+            }
+        }
         refreshConfigSource()
         // MARZ VPN updates come from marzvpn.com / stores, never from upstream sing-box releases.
         viewModelScope.launch(Dispatchers.IO) {

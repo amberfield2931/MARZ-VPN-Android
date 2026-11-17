@@ -237,4 +237,12 @@
     <string name="marz_pay_new_link">دریافت لینک جدید</string>
     <string name="marz_pay_no_order">هنوز سفارشی ایجاد نشده و چیزی پرداخت نشده است. می‌توانید به پرداخت برگردید یا طرح دیگری انتخاب کنید.</string>
     <string name="marz_pay_earlier_kept">اگر صورت‌حساب قبلی را پرداخت کرده‌اید، به حساب شما منظور می‌شود؛ نیازی به پرداخت دوباره نیست.</string>
+    <string name="marz_update_check">بررسی به‌روزرسانی</string>
+    <string name="marz_update_checking">در حال بررسی…</string>
+    <string name="marz_update_latest">آخرین نسخه نصب است.</string>
+    <string name="marz_update_available">نسخهٔ جدید در دسترس است: %1$s</string>
+    <string name="marz_update_download">دانلود</string>
+    <string name="marz_update_later">بعداً</string>
+    <string name="marz_update_failed">بررسی به‌روزرسانی انجام نشد.</string>
+    <string name="marz_update_retry">تلاش دوباره</string>
 </resources>
