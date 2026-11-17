@@ -34,7 +34,7 @@ import com.marzvpn.app.api.CheckoutProblem
 import com.marzvpn.app.api.PaymentChannel
 import com.marzvpn.app.api.SubscriptionView
 import com.marzvpn.app.api.VpnProfile
-import com.marzvpn.app.model.Catalog
+import com.marzvpn.app.model.PlanCatalog
 import com.marzvpn.app.model.Entitlement
 import com.marzvpn.app.model.PlanCode
 import com.marzvpn.app.ui.BigButton
@@ -58,6 +58,7 @@ fun PlansScreen(
     subscription: SubscriptionView?,
     sources: Map<String, String>,
     checkout: CheckoutUi,
+    catalog: PlanCatalog,
     onPay: (PlanCode, CheckoutAction, String?, PaymentChannel) -> Unit,
     onCheckNow: () -> Unit,
     onDone: () -> Unit,
@@ -67,7 +68,7 @@ fun PlansScreen(
     onChooseAnother: () -> Unit = {},
 ) {
     if (!signedIn) {
-        GuestPlans(onBack)
+        GuestPlans(catalog, onBack)
         return
     }
     val profiles = subscription?.profiles.orEmpty()
@@ -75,7 +76,8 @@ fun PlansScreen(
     // One profile: that one. Several: only an explicit choice (never guessed).
     val profileId = if (profiles.size > 1) chosen?.takeIf { id -> profiles.any { it.id == id } } else profiles.singleOrNull()?.id
     val profile = profiles.firstOrNull { it.id == profileId }
-    val current = planOf(profile?.entitlement ?: subscription?.entitlement?.takeIf { profiles.size <= 1 })
+    val currentEntitlement = profile?.entitlement ?: subscription?.entitlement?.takeIf { profiles.size <= 1 }
+    val current = planOf(currentEntitlement)
     // Only a running request or a paid order being credited holds the plans; returning unpaid never does.
     val busy = checkout == CheckoutUi.Requesting || (checkout is CheckoutUi.Opened && CheckoutFlow.blocksNewPayment(checkout.state))
     val canPay = Links.webCheckoutAllowed && !busy && (profiles.size <= 1 || profileId != null)
@@ -92,13 +94,14 @@ fun PlansScreen(
             ProfileChooser(profiles, sources, profileId) { chosen = it }
         }
         // The current plan first when renewing, the other plan first when changing.
-        val plans = Catalog.plans.sortedBy { (it.code == current) == (action == CheckoutAction.Change) }
+        val plans = catalog.plans.sortedBy { (familyOf(it.code) == current) == (action == CheckoutAction.Change) }
         plans.forEach { plan ->
-            val name = if (plan.code == PlanCode.Unlimited) "Unlimited" else "Basic"
+            val name = planName(plan)
             // A paid plan is renewed or changed; a Trial (or no plan) buys its first paid plan on the same profile.
+            // Pro codes renew a Pro (or paid rights bought before Pro) and change a Basic.
             val planAction = when {
                 current == null -> if (profile?.entitlement is Entitlement.Other || (profiles.size <= 1 && subscription?.entitlement is Entitlement.Other)) action else CheckoutAction.Buy
-                plan.code == current -> CheckoutAction.Renew
+                familyOf(plan.code) == current -> CheckoutAction.Renew
                 else -> CheckoutAction.Change
             }
             val label = when (planAction) {
@@ -106,7 +109,7 @@ fun PlansScreen(
                 CheckoutAction.Change -> stringResource(R.string.marz_pay_switch_plan, name)
                 CheckoutAction.Buy -> stringResource(R.string.marz_plan_choose, name)
             }
-            PlanCard(plan, label + " · " + stringResource(R.string.marz_pay_open_site), onBuy = { onPay(plan.code, planAction, profileId, PaymentChannel.Website) }, enabled = canPay, current = plan.code == current)
+            PlanCard(plan, label + " · " + stringResource(R.string.marz_pay_open_site), onBuy = { onPay(plan.code, planAction, profileId, PaymentChannel.Website) }, enabled = canPay, current = isCurrent(plan.code, currentEntitlement), catalog = catalog.plans)
             if (sources[profileId] == "bot") {
                 BigOutlinedButton(label + " · Telegram", { onPay(plan.code, planAction, profileId, PaymentChannel.TelegramBot) }, enabled = canPay)
             }
@@ -119,9 +122,18 @@ fun PlansScreen(
     }
 }
 
-private fun planOf(e: Entitlement?): PlanCode? = when (e) {
-    is Entitlement.Basic -> PlanCode.Basic
-    is Entitlement.Unlimited -> PlanCode.Unlimited
+/** Basic, or the Pro family (Pro, paid rights bought before Pro, a paid plan being checked). */
+private enum class PlanFamily { Basic, Pro }
+
+/** "Your plan" badge: Basic on Basic, the 30-day Pro on a Pro (the entitlement does not say which Pro was bought). */
+private fun isCurrent(code: PlanCode, e: Entitlement?) =
+    (code == PlanCode.Basic && e is Entitlement.Basic) || (code == PlanCode.Pro && e is Entitlement.Pro)
+
+private fun familyOf(code: PlanCode) = if (code.isPro) PlanFamily.Pro else PlanFamily.Basic
+
+private fun planOf(e: Entitlement?): PlanFamily? = when (e) {
+    is Entitlement.Basic -> PlanFamily.Basic
+    is Entitlement.Pro, is Entitlement.PaidNoLimit, is Entitlement.PaidChecking -> PlanFamily.Pro
     else -> null
 }
 
@@ -135,7 +147,8 @@ private fun ProfileChooser(profiles: List<VpnProfile>, sources: Map<String, Stri
                 val e = p.entitlement
                 val plan = when (e) {
                     is Entitlement.Basic -> "Basic"
-                    is Entitlement.Unlimited -> "Unlimited"
+                    is Entitlement.Pro -> "Pro"
+                    is Entitlement.PaidNoLimit, is Entitlement.PaidChecking -> stringResource(R.string.marz_paid_plan)
                     is Entitlement.Trial -> stringResource(R.string.marz_trial_title)
                     null -> stringResource(R.string.marz_pay_profile_none)
                     else -> null // older or special profile: no invented plan name
@@ -266,18 +279,17 @@ private fun problemText(p: CheckoutProblem, action: CheckoutAction, hasProfiles:
 
 /** Public Android release uses the existing Telegram purchase path while email admission is off. */
 @Composable
-private fun GuestPlans(onBack: () -> Unit) {
+private fun GuestPlans(catalog: PlanCatalog, onBack: () -> Unit) {
     val context = LocalContext.current
     val locale = currentLocale()
     var pendingPlan by rememberSaveable { mutableStateOf<PlanCode?>(null) }
 
     MarzScaffold(title = stringResource(R.string.marz_plans_title), onBack = onBack) {
         Text(stringResource(R.string.marz_plans_subtitle), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        Catalog.plans.forEach { plan ->
-            val name = if (plan.code == PlanCode.Unlimited) "Unlimited" else "Basic"
-            PlanCard(plan, stringResource(R.string.marz_plan_choose, name), onBuy = { pendingPlan = plan.code })
+        catalog.plans.forEach { plan ->
+            PlanCard(plan, stringResource(R.string.marz_plan_choose, planName(plan)), onBuy = { pendingPlan = plan.code }, catalog = catalog.plans)
         }
-        TrialCard()
+        TrialCard(catalog.trial)
         if (Links.webCheckoutAllowed) {
             BigOutlinedButton(stringResource(R.string.marz_pay_telegram_stars), { Links.open(context, Links.BOT) }, icon = Icons.AutoMirrored.Rounded.Send)
         }

@@ -36,8 +36,8 @@ object Links {
      * will be added with server-side checkout intents (docs/ARCHITECTURE.md §4).
      */
     fun checkoutUrl(plan: PlanCode, locale: Locale): String {
-        val query = if (plan == PlanCode.Unlimited) "?plan=unlimited" else "?plan=basic"
-        return "$SITE${sitePrefix(locale)}/checkout$query"
+        // The App API's wire code (basic / unlimited / unlimited_6m): the site shows its own current terms.
+        return "$SITE${sitePrefix(locale)}/checkout?plan=${plan.wire}"
     }
 
     fun siteUrl(locale: Locale) = "$SITE${sitePrefix(locale)}/"

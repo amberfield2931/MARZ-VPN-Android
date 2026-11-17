@@ -50,6 +50,7 @@ fun MarzApp(vm: MarzViewModel, onToggleConnection: () -> Unit, onEngineTools: ()
     val nav = rememberNavController()
     val account by vm.account.collectAsStateWithLifecycle()
     val update by vm.update.collectAsStateWithLifecycle()
+    val catalog by vm.catalog.collectAsStateWithLifecycle()
     var updateLater by rememberSaveable { androidx.compose.runtime.mutableStateOf<String?>(null) }
     val theme by vm.theme.collectAsStateWithLifecycle()
     val engineState by vm.engineState.collectAsStateWithLifecycle()
@@ -121,6 +122,7 @@ fun MarzApp(vm: MarzViewModel, onToggleConnection: () -> Unit, onEngineTools: ()
                 onTelegram = { nav.navigate(Route.LOGIN_TELEGRAM) },
                 onEmail = { nav.navigate(Route.LOGIN_EMAIL) },
                 onPlans = { openPlans(CheckoutAction.Buy) },
+                trial = catalog.trial,
                 onContinue = {
                     vm.markWelcomeSeen()
                     nav.navigate(Route.HOME) { popUpTo(Route.WELCOME) { inclusive = true } }
@@ -153,6 +155,8 @@ fun MarzApp(vm: MarzViewModel, onToggleConnection: () -> Unit, onEngineTools: ()
         }
         composable(Route.PLANS, arguments = listOf(navArgument("action") { type = NavType.StringType; defaultValue = CheckoutAction.Buy.name })) { entry ->
             androidx.compose.runtime.DisposableEffect(Unit) { onDispose { vm.cancelPendingCheckout() } }
+            // The current catalog each time the plans open (the cached or built-in one meanwhile).
+            androidx.compose.runtime.LaunchedEffect(Unit) { vm.refreshCatalog() }
             val action = runCatching { CheckoutAction.valueOf(entry.arguments?.getString("action").orEmpty()) }.getOrDefault(CheckoutAction.Buy)
             PlansScreen(
                 signedIn = signedIn,
@@ -160,6 +164,7 @@ fun MarzApp(vm: MarzViewModel, onToggleConnection: () -> Unit, onEngineTools: ()
                 subscription = subscription,
                 sources = (account as? AccountState.SignedIn)?.account?.vpnSources.orEmpty(),
                 checkout = checkout,
+                catalog = catalog,
                 onPay = { plan, planAction, profileId, channel -> vm.startCheckout(plan, planAction, profileId, locale.language, channel) },
                 onCheckNow = vm::refreshPayment,
                 canRetry = canRetryCheckout,

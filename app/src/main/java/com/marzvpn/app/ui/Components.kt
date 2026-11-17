@@ -242,17 +242,17 @@ fun currentLocale(): Locale = LocalResources.current.configuration.locales[0] ?:
 fun formatDate(instant: Instant, locale: Locale): String =
     DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale).withZone(ZoneId.systemDefault()).format(instant)
 
-/** Binary units, as on the site: 100 GiB = 107,374,182,400 bytes. */
-fun formatBytes(bytes: Long, locale: Locale): String {
-    val gib = bytes.toDouble() / (1024.0 * 1024 * 1024)
-    val ru = locale.language == "ru" // same unit spelling as marzvpn.com/ru
-    return if (gib >= 1) {
-        val whole = gib >= 10 || gib == Math.floor(gib)
-        String.format(locale, if (whole) "%.0f %s" else "%.1f %s", gib, if (ru) "ГиБ" else "GiB")
-    } else {
-        String.format(locale, "%.0f %s", bytes.toDouble() / (1024.0 * 1024), if (ru) "МиБ" else "MiB")
-    }
-}
+/** Binary units, as on the site: 100 GiB = 107,374,182,400 bytes (Basic, Trial, bonuses). */
+fun formatBytes(bytes: Long, locale: Locale): String =
+    com.marzvpn.app.model.PlanFormat.binary(bytes, locale, com.marzvpn.app.model.PlanFormat.Units.of(locale))
+
+/** Decimal units, as the Pro terms: 300 GB = 300,000,000,000 bytes. Never mixed with [formatBytes]. */
+fun formatGb(bytes: Long, locale: Locale): String =
+    com.marzvpn.app.model.PlanFormat.decimal(bytes, locale, com.marzvpn.app.model.PlanFormat.Units.of(locale))
+
+/** 2,000,000 bit/s = "2 Mbps". */
+fun formatBitrate(bps: Long, locale: Locale): String =
+    com.marzvpn.app.model.PlanFormat.bitrate(bps, locale, com.marzvpn.app.model.PlanFormat.Units.of(locale))
 
 /** Keeps safe-area padding for screens drawn without a Scaffold. */
 @Composable

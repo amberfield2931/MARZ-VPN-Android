@@ -28,6 +28,8 @@ import com.marzvpn.app.api.TelegramLogin
 import com.marzvpn.app.model.Account
 import com.marzvpn.app.model.AccountState
 import com.marzvpn.app.model.Catalog
+import com.marzvpn.app.model.PlanCatalog
+import com.marzvpn.app.model.ProStatus
 import com.marzvpn.app.model.Entitlement
 import com.marzvpn.app.model.Identity
 import com.marzvpn.app.model.PlanCode
@@ -72,7 +74,7 @@ import java.time.Instant
 import java.time.temporal.ChronoUnit
 
 /** UI sample states for reviewing layouts from developer tools. Always labelled as samples on screen. */
-enum class SampleKind { Trial, Basic, Unlimited }
+enum class SampleKind { Trial, Basic, Pro }
 
 /** Telegram login on this device. */
 /** What a route row shows (only the route in use is measured): a warm delay, or "—" after a failed check. */
@@ -139,6 +141,32 @@ class MarzViewModel(app: android.app.Application) : AndroidViewModel(app) {
 
     private val _sample = MutableStateFlow<SampleKind?>(null)
     val sample: StateFlow<SampleKind?> = _sample.asStateFlow()
+
+    /**
+     * Plans to offer: the last valid catalog from the App API (cached), else the built-in Basic only.
+     * Refreshed at start and whenever the plans screen opens; an invalid answer never replaces it.
+     */
+    private val _catalog = MutableStateFlow(prefs.catalog?.let(Catalog::parse) ?: Catalog.builtIn)
+    val catalog: StateFlow<PlanCatalog> = _catalog.asStateFlow()
+    private val catalogBusy = java.util.concurrent.atomic.AtomicBoolean(false)
+
+    fun refreshCatalog() {
+        if (!api.isAvailable || !catalogBusy.compareAndSet(false, true)) return
+        viewModelScope.launch {
+            try {
+                val r = api.catalog()
+                val raw = (r as? ApiResult.Ok)?.value
+                val parsed = raw?.let(Catalog::parse)
+                if (raw != null && parsed != null) {
+                    _catalog.value = parsed
+                    prefs.catalog = raw
+                }
+                DiagJournal.log("api", "catalog", if (parsed != null) "plans ${parsed.plans.joinToString(",") { it.code.name }}" else "kept (${(r as? ApiResult.Error)?.code ?: "invalid"})")
+            } finally {
+                catalogBusy.set(false)
+            }
+        }
+    }
 
     /** Before sign-in the picker shows the built-in country list (never used for configs). */
     private val _servers = MutableStateFlow(ServerCatalog.preview)
@@ -302,6 +330,7 @@ class MarzViewModel(app: android.app.Application) : AndroidViewModel(app) {
             }
         }
         refreshConfigSource()
+        refreshCatalog()
         // MARZ VPN updates come from marzvpn.com / stores, never from upstream sing-box releases.
         viewModelScope.launch(Dispatchers.IO) {
             Settings.dataStore.initialize()
@@ -1027,9 +1056,15 @@ class MarzViewModel(app: android.app.Application) : AndroidViewModel(app) {
     private fun sampleAccount(kind: SampleKind): AccountState.SignedIn {
         val now = Instant.now()
         val entitlement = when (kind) {
-            SampleKind.Trial -> Entitlement.Trial(now.plus(2, ChronoUnit.DAYS), Catalog.trial.quotaBytes, 1_288_490_189L)
+            SampleKind.Trial -> Entitlement.Trial(now.plus(2, ChronoUnit.DAYS), Catalog.builtInTrial.quotaBytes, 1_288_490_189L)
             SampleKind.Basic -> Entitlement.Basic(now.plus(21, ChronoUnit.DAYS), 100 * Catalog.GIB, 38 * Catalog.GIB, 5 * Catalog.GIB)
-            SampleKind.Unlimited -> Entitlement.Unlimited(now.plus(27, ChronoUnit.DAYS), null)
+            SampleKind.Pro -> Entitlement.Pro(
+                now.plus(27, ChronoUnit.DAYS), null,
+                ProStatus(
+                    usedBytes = 112_400_000_000L, limitBytes = 300_000_000_000L, remainingFullSpeedBytes = 187_600_000_000L,
+                    limited = false, limitedSpeedBps = null, nextPackageAt = null, planEnd = now.plus(27, ChronoUnit.DAYS), stale = false,
+                ),
+            )
         }
         return AccountState.SignedIn(
             account = Account(id = "sample", identities = listOf(Identity(Identity.Kind.Telegram, "@sample"))),

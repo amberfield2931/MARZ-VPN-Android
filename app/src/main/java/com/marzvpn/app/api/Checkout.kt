@@ -82,7 +82,9 @@ object CheckoutRules {
 
     /** Maps the API's stable error codes (and the client's own) to what the user is told. */
     fun problem(code: String, httpStatus: Int): CheckoutProblem = when (code) {
-        "not_found" -> CheckoutProblem.FeatureOff
+        // "not_found": the integrated payment is off. "app_update_required": the server wants a newer app for
+        // this plan; the user pays where the profile was set up (bot or site), which shows the current terms.
+        "not_found", "app_update_required" -> CheckoutProblem.FeatureOff
         "signed_out", "unauthorized", "reauth_required" -> CheckoutProblem.SignedOut
         "pilot_closed" -> CheckoutProblem.PilotClosed
         "vpn_identity_not_found" -> CheckoutProblem.ProfileGone
@@ -139,6 +141,22 @@ object CheckoutFlow {
 
     /** Still worth asking the server about: an earlier attempt can be paid after a new one started. */
     fun stillOpen(state: String) = state !in terminal && state != "paid"
+}
+
+/**
+ * Body of POST /v1/billing/intent. A Pro code carries the catalog acknowledgement ("catalog": "pro-1"):
+ * this app showed the server's Pro descriptor, not the previous plan. Basic never carries it.
+ */
+object CheckoutBody {
+    fun of(plan: PlanCode, action: CheckoutAction, vpnIdentity: String?, locale: String, channel: PaymentChannel?): Map<String, String> =
+        buildMap {
+            put("action", action.wire)
+            put("plan", plan.wire)
+            put("locale", locale)
+            if (vpnIdentity != null) put("vpn_identity", vpnIdentity)
+            if (channel != null) put("channel", channel.wire)
+            if (plan.isPro) put("catalog", com.marzvpn.app.model.Catalog.PRO_ACK)
+        }
 }
 
 /** The plan, action, profile and channel of the last request, repeated for a fresh one-use link. */

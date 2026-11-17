@@ -94,6 +94,11 @@ class MarzPrefs(context: Context) {
             prefs.edit().putString(KEY_ROUTES, raw).apply()
         }
 
+    /** Last valid public catalog (GET /v1/catalog, public prices only), re-validated when read. */
+    var catalog: String?
+        get() = prefs.getString(KEY_CATALOG, null)
+        set(value) = prefs.edit().putString(KEY_CATALOG, value).apply()
+
     /** Asked once for notification permission (Android 13+), so the VPN notification can be shown. */
     var notificationPermissionAsked: Boolean
         get() = prefs.getBoolean(KEY_NOTIFY_ASKED, false)
@@ -129,6 +134,7 @@ class MarzPrefs(context: Context) {
         private const val KEY_WELCOME = "welcome_seen"
         private const val KEY_SERVER = "server"
         private const val KEY_ROUTES = "routes"
+        private const val KEY_CATALOG = "catalog"
         private const val KEY_NOTIFY_ASKED = "notify_asked"
     }
 }

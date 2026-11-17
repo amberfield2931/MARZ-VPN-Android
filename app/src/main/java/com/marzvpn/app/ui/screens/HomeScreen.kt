@@ -47,6 +47,7 @@ import com.marzvpn.app.TrafficState
 import com.marzvpn.app.api.CheckoutAction
 import com.marzvpn.app.model.AccountState
 import com.marzvpn.app.model.Entitlement
+import com.marzvpn.app.model.ProStatus
 import com.marzvpn.app.model.Server
 import com.marzvpn.app.model.ServerChoice
 import com.marzvpn.app.ui.BigButton
@@ -57,7 +58,9 @@ import com.marzvpn.app.ui.MarzScaffold
 import com.marzvpn.app.ui.PreviewNotice
 import com.marzvpn.app.ui.ScreenColumn
 import com.marzvpn.app.ui.currentLocale
+import com.marzvpn.app.ui.formatBitrate
 import com.marzvpn.app.ui.formatBytes
+import com.marzvpn.app.ui.formatGb
 import com.marzvpn.app.ui.formatDate
 import com.marzvpn.app.ui.theme.LocalStatusColors
 import com.marzvpn.app.vpn.ConfigSource
@@ -332,11 +335,23 @@ private fun SubscriptionCard(account: AccountState, onPlans: (CheckoutAction) ->
                     Traffic(e.quotaBytes, e.usedBytes, locale)
                     RenewButtons(onPlans)
                 }
-                is Entitlement.Unlimited -> {
-                    Text("Unlimited", style = MaterialTheme.typography.titleLarge)
+                is Entitlement.Pro -> {
+                    Text("Pro", style = MaterialTheme.typography.titleLarge)
                     Expiry(e, locale)
-                    Text(stringResource(R.string.marz_plan_no_traffic_limit), style = MaterialTheme.typography.bodyLarge)
+                    ProPackage(e.status, locale)
                     RenewButtons(onPlans)
+                }
+                is Entitlement.PaidNoLimit -> {
+                    // Paid before Pro: kept until its end; never named and never offered again.
+                    Text(stringResource(R.string.marz_paid_plan_yours), style = MaterialTheme.typography.titleLarge)
+                    Text(stringResource(R.string.marz_paid_no_limit_until, formatDate(e.endsAt, locale)), style = MaterialTheme.typography.bodyLarge)
+                    BigOutlinedButton(stringResource(R.string.marz_view_plans), { onPlans(CheckoutAction.Change) })
+                }
+                is Entitlement.PaidChecking -> {
+                    Text(stringResource(R.string.marz_paid_plan), style = MaterialTheme.typography.titleLarge)
+                    Expiry(e, locale)
+                    Text(stringResource(R.string.marz_plan_checking), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    BigOutlinedButton(stringResource(R.string.marz_view_plans), { onPlans(CheckoutAction.Change) })
                 }
                 is Entitlement.Other -> {
                     Text(stringResource(R.string.marz_subscription_active), style = MaterialTheme.typography.titleLarge)
@@ -402,6 +417,36 @@ private fun Traffic(quota: Long, used: Long, locale: java.util.Locale) {
         )
         LinearProgressIndicator(
             progress = { if (quota > 0) remaining.toFloat() / quota else 0f },
+            modifier = Modifier.fillMaxWidth().clip(MaterialTheme.shapes.small),
+        )
+    }
+}
+
+/**
+ * Pro package from the server: full-speed data left (decimal GB), or, once used, the reduced speed until
+ * the next package (or the plan's end). Stale or inconsistent numbers: "checking", never a guess.
+ */
+@Composable
+private fun ProPackage(p: ProStatus?, locale: java.util.Locale) {
+    if (p == null || p.stale) {
+        Text(stringResource(R.string.marz_plan_checking), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        return
+    }
+    val speed = p.limitedSpeedBps
+    if (p.limited && speed != null) {
+        Text(
+            stringResource(R.string.marz_pro_limited, formatGb(p.limitBytes, locale), formatBitrate(speed, locale), formatDate(p.nextPackageAt ?: p.planEnd, locale)),
+            style = MaterialTheme.typography.bodyLarge,
+        )
+        return
+    }
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Text(
+            stringResource(R.string.marz_pro_left, formatGb(p.remainingFullSpeedBytes, locale), formatGb(p.limitBytes, locale)),
+            style = MaterialTheme.typography.bodyLarge,
+        )
+        LinearProgressIndicator(
+            progress = { (p.remainingFullSpeedBytes.toFloat() / p.limitBytes).coerceIn(0f, 1f) },
             modifier = Modifier.fillMaxWidth().clip(MaterialTheme.shapes.small),
         )
     }

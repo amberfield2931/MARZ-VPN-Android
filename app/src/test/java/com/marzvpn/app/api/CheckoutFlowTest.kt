@@ -50,11 +50,11 @@ class CheckoutFlowTest {
     @Test
     fun switchingPlansKeepsFollowingTheOldInvoice() {
         val earlier = EarlierAttempts()
-        // Basic opened and an order created; the user switches to Unlimited, then back to Basic.
+        // Basic opened and an order created; the user switches to Pro, then back to Basic.
         earlier.keep(EarlierAttempts.Attempt(a, "p1", PaymentChannel.Website, "pending"))
         earlier.keep(EarlierAttempts.Attempt(b, "p1", PaymentChannel.Website, "awaiting_checkout"))
         assertEquals(listOf(b, a), earlier.all.map { it.id })
-        // The unopened Unlimited link is cancelled by the server when the next link is asked for.
+        // The unopened Pro link is cancelled by the server when the next link is asked for.
         earlier.update(b, "cancelled")
         assertEquals(listOf(a), earlier.all.map { it.id })
         // The old Basic invoice is paid later: it stays followed until the server says paid, then it is done.
@@ -103,9 +103,9 @@ class CheckoutFlowTest {
 
     @Test
     fun retryRepeatsTheSameRequest() {
-        val r = CheckoutRequest(PlanCode.Unlimited, CheckoutAction.Change, "p1", PaymentChannel.Website)
+        val r = CheckoutRequest(PlanCode.Pro, CheckoutAction.Change, "p1", PaymentChannel.Website)
         assertEquals(r, r.copy())
-        assertEquals(PlanCode.Unlimited, r.plan)
+        assertEquals(PlanCode.Pro, r.plan)
         assertEquals("change_plan", r.action.wire)
     }
 }

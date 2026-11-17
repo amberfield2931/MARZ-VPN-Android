@@ -378,6 +378,12 @@ class HttpAppApi(context: Context, private val baseUrl: String) : AppApi {
         return SubscriptionView(state, e?.let(::entitlement), state == "active", effective?.optString("vpn_identity")?.ifEmpty { null }, profiles)
     }
 
+    /** Public catalog (no sign-in, not signed): the raw answer, validated by [com.marzvpn.app.model.Catalog.parse]. */
+    override suspend fun catalog(): ApiResult<String> {
+        val r = call("GET", "/v1/catalog")
+        return if (r.code == 200) ApiResult.Ok(r.body) else fail(r)
+    }
+
     override suspend fun servers(): ApiResult<List<Server>> {
         val r = call("GET", "/v1/servers", auth = true)
         if (r.code == 403) return ApiResult.Ok(emptyList()) // no active plan: nothing to choose
@@ -405,11 +411,9 @@ class HttpAppApi(context: Context, private val baseUrl: String) : AppApi {
     }
 
     override suspend fun createCheckoutIntent(plan: PlanCode, action: CheckoutAction, vpnIdentity: String?, locale: String, channel: PaymentChannel?): ApiResult<CheckoutIntent> {
-        val planCode = if (plan == PlanCode.Unlimited) "unlimited" else "basic"
-        val body = JSONObject().put("action", action.wire).put("plan", planCode).put("locale", locale)
-        if (vpnIdentity != null) body.put("vpn_identity", vpnIdentity)
-        if (channel != null) body.put("channel", channel.wire)
-        val r = call("POST", "/v1/billing/intent", body, auth = true, signed = true)
+        val planCode = plan.wire
+        val body = CheckoutBody.of(plan, action, vpnIdentity, locale, channel)
+        val r = call("POST", "/v1/billing/intent", JSONObject(body), auth = true, signed = true)
         if (r.code != 200) return fail(r)
         val j = r.json
         // The answer must be for exactly this request, and the link one of the two exact shapes.
@@ -439,18 +443,7 @@ class HttpAppApi(context: Context, private val baseUrl: String) : AppApi {
         return ApiResult.Ok(receipt)
     }
 
-    private fun entitlement(e: JSONObject): Entitlement {
-        val ends = Instant.ofEpochSecond(e.optLong("ends_at", 0))
-        val quota = if (e.isNull("quota_bytes")) null else e.getLong("quota_bytes")
-        val used = if (e.isNull("used_bytes")) 0L else e.getLong("used_bytes")
-        val bonus = e.optJSONObject("bonus")?.optLong("reserve_bytes")?.takeIf { it > 0 }
-        return when (e.optString("kind")) {
-            "unlimited" -> Entitlement.Unlimited(ends, bonus)
-            "trial" -> Entitlement.Trial(ends, quota ?: 0, used, bonus)
-            "basic" -> if (quota != null) Entitlement.Basic(ends, quota, used, bonus) else Entitlement.Other(ends, null, null, bonus)
-            else -> Entitlement.Other(ends, quota, if (quota != null) used else null, bonus)
-        }
-    }
+    private fun entitlement(e: JSONObject): Entitlement = EntitlementParser.parse(e.toString())
 
     companion object {
         private val random = SecureRandom()

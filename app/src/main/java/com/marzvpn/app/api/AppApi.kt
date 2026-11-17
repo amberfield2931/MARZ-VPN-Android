@@ -42,6 +42,9 @@ interface AppApi {
     suspend fun subscription(): ApiResult<SubscriptionView>
     suspend fun servers(): ApiResult<List<Server>>
 
+    /** GET /v1/catalog: public, no sign-in. The raw JSON; the caller validates it. */
+    suspend fun catalog(): ApiResult<String> = ApiResult.NotAvailable
+
     /** A complete sing-box config for the account's active profile (GET /vpn/config). */
     suspend fun vpnConfig(serverId: String?): ApiResult<String>
 

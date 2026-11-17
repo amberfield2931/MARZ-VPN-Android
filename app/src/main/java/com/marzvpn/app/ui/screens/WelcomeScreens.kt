@@ -31,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -41,8 +42,9 @@ import com.marzvpn.app.EmailUi
 import com.marzvpn.app.Links
 import com.marzvpn.app.TelegramUi
 import com.marzvpn.app.model.Catalog
-import com.marzvpn.app.model.PlanCode
+import com.marzvpn.app.model.PlanFormat
 import com.marzvpn.app.model.PlanOffer
+import com.marzvpn.app.model.TrialOffer
 import com.marzvpn.app.ui.BigButton
 import com.marzvpn.app.ui.BigOutlinedButton
 import com.marzvpn.app.ui.Bullet
@@ -55,7 +57,9 @@ import com.marzvpn.app.ui.PreviewNotice
 import com.marzvpn.app.ui.ScreenColumn
 import com.marzvpn.app.ui.currentLocale
 import com.marzvpn.app.ui.ltr
+import com.marzvpn.app.ui.formatBitrate
 import com.marzvpn.app.ui.formatBytes
+import com.marzvpn.app.ui.formatGb
 import com.marzvpn.app.ui.safeArea
 import com.marzvpn.app.ui.theme.PriceStyle
 import io.nekohasekai.sfa.R
@@ -68,6 +72,7 @@ fun WelcomeScreen(
     onEmail: () -> Unit,
     onPlans: () -> Unit,
     onContinue: () -> Unit,
+    trial: TrialOffer = Catalog.builtInTrial,
 ) {
     Surface(color = MaterialTheme.colorScheme.background) {
         ScreenColumn(Modifier.safeArea(), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -88,7 +93,7 @@ fun WelcomeScreen(
             }
             BigButton(stringResource(R.string.marz_login_telegram), onTelegram, icon = Icons.AutoMirrored.Rounded.Send)
             BigOutlinedButton(stringResource(R.string.marz_login_email), onEmail, icon = Icons.Rounded.Email)
-            TrialCard()
+            TrialCard(trial)
             LimeButton(stringResource(R.string.marz_view_plans), onPlans)
             TextButton(onClick = onContinue) { Text(stringResource(R.string.marz_continue_without_login)) }
             Spacer(Modifier.height(8.dp))
@@ -97,12 +102,12 @@ fun WelcomeScreen(
 }
 
 @Composable
-fun TrialCard() {
+fun TrialCard(trial: TrialOffer = Catalog.builtInTrial) {
     val locale = currentLocale()
     MarzCard {
         Text(stringResource(R.string.marz_trial_title), style = MaterialTheme.typography.titleLarge)
         Text(
-            stringResource(R.string.marz_trial_terms, Catalog.trial.days, formatBytes(Catalog.trial.quotaBytes, locale)),
+            stringResource(R.string.marz_trial_terms, trial.days, formatBytes(trial.quotaBytes, locale)),
             style = MaterialTheme.typography.bodyLarge,
         )
         Text(
@@ -113,20 +118,31 @@ fun TrialCard() {
     }
 }
 
+/** The plan's name: "Basic", "Pro", or "Pro 6 months (180 days)" from the server's package count. */
 @Composable
-fun PlanCard(plan: PlanOffer, buttonText: String, onBuy: () -> Unit, enabled: Boolean = true, current: Boolean = false) {
+fun planName(plan: PlanOffer): String {
+    val packages = plan.pro?.packages ?: return "Basic"
+    return if (packages <= 1) "Pro" else pluralStringResource(R.plurals.marz_plan_pro_months, packages, packages, plan.periodDays)
+}
+
+/**
+ * One catalog plan. Every number comes from the catalog: Basic's data in binary units (GiB), Pro's
+ * full-speed data in decimal units (GB) and its speed after that from bit/s.
+ */
+@Composable
+fun PlanCard(plan: PlanOffer, buttonText: String, onBuy: () -> Unit, enabled: Boolean = true, current: Boolean = false, catalog: List<PlanOffer> = emptyList()) {
     val locale = currentLocale()
-    val unlimited = plan.code == PlanCode.Unlimited
-    MarzCard(highlighted = unlimited) {
-        // The badge sits above the name: a long badge never squeezes "Unlimited" onto two lines.
-        if (current || unlimited) {
+    val pro = plan.pro
+    MarzCard(highlighted = pro != null) {
+        // The badge sits above the name: a long badge never squeezes the name onto two lines.
+        if (current || pro != null) {
             Surface(shape = CircleShape, color = MaterialTheme.colorScheme.secondary, contentColor = MaterialTheme.colorScheme.onSecondary) {
-                Text(stringResource(if (current) R.string.marz_pay_your_plan else R.string.marz_plan_unlimited_badge), style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp))
+                Text(stringResource(if (current) R.string.marz_pay_your_plan else R.string.marz_plan_pro_badge), style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp))
             }
         }
-        Text(if (unlimited) "Unlimited" else "Basic", style = MaterialTheme.typography.headlineSmall)
+        Text(planName(plan), style = MaterialTheme.typography.headlineSmall)
         Row(verticalAlignment = Alignment.Bottom) {
-            Text("$" + plan.priceUsd, style = PriceStyle)
+            Text(PlanFormat.usd(plan.priceUsd), style = PriceStyle)
             Spacer(Modifier.width(6.dp))
             Text(
                 stringResource(R.string.marz_plan_period, plan.periodDays),
@@ -135,18 +151,33 @@ fun PlanCard(plan: PlanOffer, buttonText: String, onBuy: () -> Unit, enabled: Bo
                 modifier = Modifier.padding(bottom = 6.dp),
             )
         }
-        val quota = plan.quotaBytes
-        Bullet(if (quota == null) stringResource(R.string.marz_plan_no_traffic_limit) else stringResource(R.string.marz_plan_traffic, formatBytes(quota, locale)))
-        Bullet(stringResource(R.string.marz_plan_all_servers))
-        if (unlimited) {
-            Bullet(stringResource(R.string.marz_plan_no_speed_cap))
-            Bullet(stringResource(R.string.marz_plan_ip3))
-        } else {
+        if (pro == null) {
+            plan.quotaBytes?.let { Bullet(stringResource(R.string.marz_plan_traffic, formatBytes(it, locale))) }
+            Bullet(stringResource(R.string.marz_plan_all_servers))
             Bullet(stringResource(R.string.marz_plan_basic_bonus))
+        } else {
+            val fullSpeed = formatGb(pro.fullSpeedBytes, locale)
+            val after = formatBitrate(pro.afterFullSpeedBps, locale)
+            if (pro.packages <= 1) {
+                Bullet(stringResource(R.string.marz_plan_pro_full_speed, fullSpeed, pro.packageDays))
+                Bullet(stringResource(R.string.marz_plan_pro_after, after, fullSpeed))
+                Bullet(stringResource(R.string.marz_plan_pro_resets, pro.packageDays))
+            } else {
+                Bullet(stringResource(R.string.marz_plan_pro_packages, pro.packages, pro.packageDays, fullSpeed))
+                Bullet(stringResource(R.string.marz_plan_pro_then, after))
+            }
+            Bullet(stringResource(R.string.marz_plan_all_servers))
+            PlanFormat.proSavings(catalog, plan)?.let { saved ->
+                Text(
+                    stringResource(R.string.marz_plan_pro_save, saved, pro.packages, pro.packageDays),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+            }
         }
         Spacer(Modifier.size(2.dp))
         if (Links.webCheckoutAllowed) {
-            if (unlimited) LimeButton(buttonText, onBuy, enabled = enabled)
+            if (pro != null) LimeButton(buttonText, onBuy, enabled = enabled)
             else BigButton(buttonText, onBuy, enabled = enabled)
         } else {
             BigButton(stringResource(R.string.marz_store_purchase_later), {}, enabled = false)

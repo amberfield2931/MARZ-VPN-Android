@@ -440,7 +440,7 @@ fun DiagnosticsScreen(
                             null -> stringResource(R.string.marz_diag_sample_off)
                             SampleKind.Trial -> stringResource(R.string.marz_trial_title)
                             SampleKind.Basic -> "Basic"
-                            SampleKind.Unlimited -> "Unlimited"
+                            SampleKind.Pro -> "Pro"
                         },
                         style = MaterialTheme.typography.bodyLarge,
                     )

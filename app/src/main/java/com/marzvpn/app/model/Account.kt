@@ -47,7 +47,27 @@ sealed interface Entitlement {
         override val bonusBytes: Long?,
     ) : Entitlement
 
-    data class Unlimited(
+    /**
+     * Pro (kind "pro"): 300 GB at full speed per 30-day package, then a reduced speed. [status] is the
+     * server's package view; null when it is missing or not consistent (the UI says it is being checked).
+     */
+    data class Pro(
+        override val endsAt: Instant,
+        override val bonusBytes: Long?,
+        val status: ProStatus?,
+    ) : Entitlement
+
+    /**
+     * Paid rights bought before Pro (kind "unlimited"): no data limit until [endsAt]. The previous plan's
+     * name is never shown and it is never offered again.
+     */
+    data class PaidNoLimit(
+        override val endsAt: Instant,
+        override val bonusBytes: Long?,
+    ) : Entitlement
+
+    /** A paid plan whose details the server is still checking (kind "subscription", tier "verifying"). */
+    data class PaidChecking(
         override val endsAt: Instant,
         override val bonusBytes: Long?,
     ) : Entitlement
@@ -73,24 +93,16 @@ sealed interface Entitlement {
     }
 }
 
-enum class PlanCode { Basic, Unlimited }
-
-/** Public offer shown before sign-in. The App API (GET /catalog) will replace this built-in copy. */
-data class PlanOffer(
-    val code: PlanCode,
-    val priceUsd: String,
-    val periodDays: Int,
-    /** null = no traffic limit. */
-    val quotaBytes: Long?,
+/** Pro package state from the App API (GET /subscription, entitlement.pro). Display only. */
+data class ProStatus(
+    val usedBytes: Long,
+    val limitBytes: Long,
+    val remainingFullSpeedBytes: Long,
+    val limited: Boolean,
+    /** The speed after the full-speed package is used (bit/s); set while [limited]. */
+    val limitedSpeedBps: Long?,
+    val nextPackageAt: Instant?,
+    val planEnd: Instant,
+    /** The controller's numbers are older than it allows: shown as "checking". */
+    val stale: Boolean,
 )
-
-data class TrialOffer(val days: Int, val quotaBytes: Long)
-
-object Catalog {
-    const val GIB = 1024L * 1024 * 1024
-    val plans = listOf(
-        PlanOffer(PlanCode.Basic, "2", 30, 100 * GIB),
-        PlanOffer(PlanCode.Unlimited, "4", 30, null),
-    )
-    val trial = TrialOffer(days = 3, quotaBytes = 3 * GIB)
-}
