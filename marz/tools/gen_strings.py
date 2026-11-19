@@ -1,6 +1,9 @@
 """Generate app/src/main/res/values*/marz_strings.xml for en/ru/fa/zh-CN from one table.
 
 Usage: python3 marz/tools/gen_strings.py app/src/main/res
+       python3 marz/tools/gen_strings.py app/src/main/res --merge login_tgcode_
+The committed values*/marz_strings.xml also hold later hand-made strings that are not in this table, so a
+full run would drop them: add new keys here and merge them by prefix.
 """
 import sys
 from xml.sax.saxutils import escape
@@ -70,6 +73,41 @@ S = {
  'login_telegram_remember': ('Remember this number. In Telegram, tap exactly this number in the bot.', 'Запомните это число. В Telegram нажмите в боте именно его.', 'این عدد را به خاطر بسپارید. در تلگرام دقیقاً همین عدد را در ربات بزنید.', '请记住这个数字。在 Telegram 机器人中点击完全相同的数字。'),
  'login_telegram_expires_in': ('Valid for %1$s', 'Действует ещё %1$s', 'اعتبار تا %1$s دیگر', '剩余有效时间 %1$s'),
  'login_telegram_open': ('Open Telegram', 'Открыть Telegram', 'باز کردن تلگرام', '打开 Telegram'),
+ # Telegram code sign-in (1.0.4): open the bot on this phone, "Get code", type the 6-digit code here.
+ 'login_tgcode_intro': ('Sign in with a one-time code from our Telegram bot. Telegram must be on this phone.',
+                        'Войдите с одноразовым кодом из нашего Telegram-бота. Telegram должен быть установлен на этом телефоне.',
+                        'با یک کد یک\u200cبارمصرف از ربات تلگرام ما وارد شوید. تلگرام باید روی همین گوشی نصب باشد.',
+                        '使用我们 Telegram 机器人发送的一次性验证码登录。此手机上需要安装 Telegram。'),
+ 'login_tgcode_step1': ('Open @MarzReality_bot on this phone', 'Откройте @MarzReality_bot на этом телефоне', '\u2066@MarzReality_bot\u2069 را روی همین گوشی باز کنید', '在此手机上打开 @MarzReality_bot'),
+ 'login_tgcode_step2': ('Press “Get code” in the bot', 'Нажмите в боте «Получить код»', 'در ربات روی «Get code» بزنید', '在机器人中点击“Get code”'),
+ 'login_tgcode_step3': ('Come back here and enter the 6-digit code', 'Вернитесь сюда и введите 6-значный код', 'به اینجا برگردید و کد ۶ رقمی را وارد کنید', '返回这里并输入 6 位验证码'),
+ 'login_tgcode_open': ('Open @MarzReality_bot', 'Открыть @MarzReality_bot', 'باز کردن \u2066@MarzReality_bot\u2069', '打开 @MarzReality_bot'),
+ 'login_tgcode_no_telegram': ('Open Telegram on this phone. If the link opens in a browser instead, install Telegram or continue with email.',
+                              'Откройте Telegram на этом телефоне. Если ссылка открылась в браузере, установите Telegram или войдите по email.',
+                              'تلگرام را روی همین گوشی باز کنید. اگر لینک در مرورگر باز شد، تلگرام را نصب کنید یا با ایمیل ادامه دهید.',
+                              '请在此手机上打开 Telegram。如果链接在浏览器中打开，请安装 Telegram 或改用邮箱登录。'),
+ 'login_tgcode_code_label': ('6-digit code from Telegram', '6-значный код из Telegram', 'کد ۶ رقمی از تلگرام', 'Telegram 中的 6 位验证码'),
+ 'login_tgcode_confirm': ('Confirm', 'Подтвердить', 'تأیید', '确认'),
+ 'login_tgcode_request': ('Request %1$s · ends in %2$s', 'Запрос %1$s · действует ещё %2$s', 'درخواست %1$s · %2$s باقی مانده', '请求 %1$s · 剩余 %2$s'),
+ 'login_tgcode_valid': ('The code is valid for 5 minutes.', 'Код действует 5 минут.', 'کد ۵ دقیقه معتبر است.', '验证码 5 分钟内有效。'),
+ 'login_tgcode_status_waiting': ('Waiting for you to press “Get code” in the bot…', 'Ждём, когда вы нажмёте «Получить код» в боте…', 'منتظریم در ربات روی «Get code» بزنید…', '正在等待您在机器人中点击“Get code”…'),
+ 'login_tgcode_status_requested': ('The bot is sending the code to Telegram…', 'Бот отправляет код в Telegram…', 'ربات در حال ارسال کد به تلگرام است…', '机器人正在向 Telegram 发送验证码…'),
+ 'login_tgcode_status_sent': ('Code sent to Telegram. Enter it here.', 'Код отправлен в Telegram. Введите его здесь.', 'کد به تلگرام ارسال شد. آن را اینجا وارد کنید.', '验证码已发送到 Telegram，请在此输入。'),
+ 'login_tgcode_status_failed': ('The bot could not send the code. Open the bot, press Start, then “Get code” again.',
+                                'Бот не смог отправить код. Откройте бота, нажмите «Запустить» (Start), затем снова «Получить код».',
+                                'ربات نتوانست کد را ارسال کند. ربات را باز کنید، روی «شروع» (Start) بزنید و دوباره «Get code» را بزنید.',
+                                '机器人无法发送验证码。请打开机器人，点击“开始”（Start），然后再次点击“Get code”。'),
+ 'login_tgcode_status_approved': ('Code accepted. Signing in…', 'Код принят. Выполняем вход…', 'کد پذیرفته شد. در حال ورود…', '验证码正确，正在登录…'),
+ 'login_tgcode_bot_unreachable': ('Cannot reach Telegram or the bot? Continue with email.', 'Не получается открыть Telegram или бота? Войдите по email.', 'به تلگرام یا ربات دسترسی ندارید؟ با ایمیل ادامه دهید.', '无法打开 Telegram 或机器人？请改用邮箱登录。'),
+ 'login_tgcode_email': ('Continue with email', 'Продолжить с email', 'ادامه با ایمیل', '改用邮箱登录'),
+ 'login_tgcode_err_wrong': ('Wrong code. Attempts left: %1$d', 'Неверный код. Осталось попыток: %1$d', 'کد نادرست است. تلاش\u200cهای باقی\u200cمانده: %1$d', '验证码错误。剩余尝试次数：%1$d'),
+ 'login_tgcode_err_wrong_plain': ('Wrong code. Check it in Telegram and try again.', 'Неверный код. Проверьте его в Telegram и попробуйте ещё раз.', 'کد نادرست است. آن را در تلگرام بررسی و دوباره تلاش کنید.', '验证码错误，请在 Telegram 中核对后重试。'),
+ 'login_tgcode_err_format': ('Enter the 6 digits of the code from Telegram.', 'Введите 6 цифр кода из Telegram.', '۶ رقم کد تلگرام را وارد کنید.', '请输入 Telegram 中验证码的 6 位数字。'),
+ 'login_tgcode_err_expired': ('The code has expired. Get a new code in the bot.', 'Срок действия кода истёк. Получите новый код в боте.', 'کد منقضی شده است. در ربات کد جدیدی دریافت کنید.', '验证码已过期，请在机器人中获取新的验证码。'),
+ 'login_tgcode_err_not_requested': ('No code yet: first press “Get code” in the bot.', 'Кода ещё нет: сначала нажмите «Получить код» в боте.', 'هنوز کدی نیست: ابتدا در ربات روی «Get code» بزنید.', '尚未获取验证码：请先在机器人中点击“Get code”。'),
+ 'login_tgcode_err_attempts': ('Too many wrong codes. Start again.', 'Слишком много неверных кодов. Начните заново.', 'کدهای نادرست زیادی وارد شد. دوباره شروع کنید.', '错误验证码次数过多，请重新开始。'),
+ 'login_tgcode_err_ended': ('This sign-in request has ended. Start again.', 'Этот запрос на вход завершён. Начните заново.', 'این درخواست ورود به پایان رسیده است. دوباره شروع کنید.', '此登录请求已结束，请重新开始。'),
+ 'login_tgcode_err_network': ('No connection to MARZ VPN. Your code is kept: tap “Confirm” again.', 'Нет связи с MARZ VPN. Код сохранён — нажмите «Подтвердить» ещё раз.', 'ارتباط با MARZ VPN برقرار نیست. کد شما حفظ شده است: دوباره «تأیید» را بزنید.', '无法连接 MARZ VPN。验证码已保留，请再次点击“确认”。'),
  'login_unavailable_preview': ('Sign-in is not available in this technical preview yet. It comes in the next version.',
                                'Вход пока недоступен в этой технической preview-версии. Он появится в следующей версии.',
                                'ورود هنوز در این نسخهٔ پیش‌نمایش فنی در دسترس نیست و در نسخهٔ بعدی اضافه می‌شود.',
@@ -234,7 +272,32 @@ def android_escape(text: str) -> str:
     return t
 
 import os
+import re
+
+MERGE = sys.argv[3] if len(sys.argv) > 3 and sys.argv[2] == '--merge' else None
+
+
+def merge(path, idx, prefix):
+    """Replace or append only the keys starting with prefix; everything else in the file stays as is."""
+    with open(path, encoding='utf-8') as f:
+        text = f.read()
+    for key, vals in S.items():
+        if not key.startswith(prefix):
+            continue
+        line = f'    <string name="marz_{key}">{android_escape(vals[idx])}</string>'
+        pattern = re.compile(r'^    <string name="marz_' + re.escape(key) + r'">.*?</string>$', re.M)
+        if pattern.search(text):
+            text = pattern.sub(lambda _: line, text, count=1)
+        else:
+            text = text.replace('</resources>', line + '\n</resources>', 1)
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write(text)
+
+
 for idx, d in DIRS.items():
+    if MERGE is not None:
+        merge(os.path.join(RES, d, 'marz_strings.xml'), idx, MERGE)
+        continue
     os.makedirs(os.path.join(RES, d), exist_ok=True)
     lines = ['<?xml version="1.0" encoding="utf-8"?>',
              '<!-- MARZ VPN UI strings. Generated from one table so all locales share the same keys. -->',
@@ -244,4 +307,4 @@ for idx, d in DIRS.items():
     lines.append('</resources>')
     with open(os.path.join(RES, d, 'marz_strings.xml'), 'w', encoding='utf-8') as f:
         f.write('\n'.join(lines) + '\n')
-print(len(S), 'keys')
+print(len(S), 'keys' + (f' (merged prefix {MERGE!r})' if MERGE is not None else ''))

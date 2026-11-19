@@ -75,6 +75,9 @@ class MarzActivity : AppCompatActivity() {
         // A profile may have been changed in the engineer tools; the plan may have changed (e.g. after paying).
         vm.refreshConfigSource()
         if (vm.api.isSignedIn()) vm.sync()
+        // Back from Telegram with the code (or after the process was killed): keep following the
+        // pending code sign-in. Nothing is opened and no new request is created here.
+        else vm.resumeTelegramCodeLogin()
         vm.onForeground(true)
     }
 

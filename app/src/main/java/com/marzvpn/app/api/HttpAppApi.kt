@@ -223,32 +223,30 @@ class HttpAppApi(context: Context, private val baseUrl: String) : AppApi {
 
     override fun isSignedIn() = auth.isSignedIn()
 
-    override suspend fun startTelegramLogin(): ApiResult<TelegramLogin> {
+    override suspend fun startTelegramLogin(locale: String): ApiResult<TelegramLogin> {
         val verifier = randomUrlSafe(48)
         val challenge = b64url(MessageDigest.getInstance("SHA-256").digest(verifier.toByteArray()))
-        val r = call("POST", "/v1/auth/telegram/start", JSONObject().put("device", device()).put("code_challenge", challenge))
+        // flow=code asks for the code ceremony; a server without it (or with it switched off) answers with
+        // the classic number-matching request, which is then shown exactly as before.
+        val r = call("POST", "/v1/auth/telegram/start", JSONObject().put("device", device()).put("code_challenge", challenge)
+            .put("flow", TelegramLoginRecord.FLOW_CODE).put("locale", locale))
         if (r.code != 200) return fail(r)
         val j = r.json
-        val expiresAt = System.currentTimeMillis() / 1000 + j.optInt("expires_in", 300)
-        // The number and link are kept with the request, so returning from Telegram (or an app restart)
-        // shows the same number and keeps waiting for the same request instead of starting a new one.
-        val saved = store.commit(mapOf(SecureStore.PENDING_TELEGRAM to
-            JSONObject().put("login_id", j.getString("login_id")).put("verifier", verifier)
-                .put("expires_at", expiresAt).put("telegram_url", j.getString("telegram_url"))
-                .put("match_code", j.optString("match_code")),
-        ))
+        val record = TelegramLoginRecord.fromStart({ jsonField(j, it) }, verifier, System.currentTimeMillis() / 1000)
+            ?: return ApiResult.Error("invalid_response", 200)
+        // The request is kept (encrypted), so returning from Telegram (or an app restart) shows the same
+        // request and keeps waiting for it instead of starting a new one.
+        val saved = store.commit(mapOf(SecureStore.PENDING_TELEGRAM to JSONObject().apply { record.forEach { (k, v) -> put(k, v) } }))
         if (!saved) return ApiResult.Error("storage_unavailable")
-        return ApiResult.Ok(TelegramLogin(j.getString("telegram_url"), j.optString("match_code"), expiresAt))
+        return TelegramLoginRecord.login { record[it] }?.let { ApiResult.Ok(it) } ?: ApiResult.Error("invalid_response", 200)
     }
 
     override fun pendingTelegramLogin(): TelegramLogin? {
         val p = store.get(SecureStore.PENDING_TELEGRAM) ?: return null
-        val url = p.optString("telegram_url").takeIf { it.isNotEmpty() } ?: return null
-        val code = p.optString("match_code").takeIf { it.isNotEmpty() } ?: return null
-        return TelegramLogin(url, code, p.optLong("expires_at"))
+        return TelegramLoginRecord.login { jsonField(p, it) }
     }
 
-    override suspend fun pollTelegramLogin(): ApiResult<LoginProgress> {
+    override suspend fun pollTelegramLogin(): ApiResult<TelegramPoll> {
         val pending = store.get(SecureStore.PENDING_TELEGRAM) ?: return ApiResult.Error("login_not_found")
         val r = call(
             "POST", "/v1/auth/telegram/confirm",
@@ -256,23 +254,50 @@ class HttpAppApi(context: Context, private val baseUrl: String) : AppApi {
             signed = true,
         )
         return when (r.code) {
-            202 -> ApiResult.Ok(LoginProgress.Pending)
-            200 -> {
-                when (val saved = saveTokens(r.json)) {
-                    is ApiResult.Ok -> {
-                        store.put(SecureStore.PENDING_TELEGRAM, null)
-                        ApiResult.Ok(LoginProgress.Done)
-                    }
-                    is ApiResult.Error -> saved
-                    ApiResult.NotAvailable -> ApiResult.NotAvailable
-                }
-            }
+            202 -> ApiResult.Ok(TelegramLoginRecord.pending(r.json.let { j -> { name: String -> jsonField(j, name) } }))
+            200 -> completeTelegramLogin(r)
             0 -> fail(r)
             else -> {
-                store.put(SecureStore.PENDING_TELEGRAM, null)
+                // A code request outlives a busy or overloaded server (it has its own 10-minute expiry).
+                val keep = pending.optString("flow") == TelegramLoginRecord.FLOW_CODE && TelegramCodeRules.transientPoll(r.code)
+                if (!keep) store.put(SecureStore.PENDING_TELEGRAM, null)
                 fail(r)
             }
         }
+    }
+
+    /** A 200 with tokens from /confirm or /code: signed in only once the pair is durable. */
+    private fun completeTelegramLogin(r: Response): ApiResult<TelegramPoll> =
+        when (val saved = saveTokens(r.json)) {
+            is ApiResult.Ok -> {
+                store.put(SecureStore.PENDING_TELEGRAM, null)
+                ApiResult.Ok(TelegramPoll(LoginProgress.Done))
+            }
+            is ApiResult.Error -> saved
+            ApiResult.NotAvailable -> ApiResult.NotAvailable
+        }
+
+    override suspend fun enterTelegramCode(code: String): ApiResult<CodeAnswer> {
+        val pending = store.get(SecureStore.PENDING_TELEGRAM) ?: return ApiResult.Error("login_not_found")
+        if (pending.optString("flow") != TelegramLoginRecord.FLOW_CODE) return ApiResult.Error("login_not_found")
+        val r = call(
+            "POST", "/v1/auth/telegram/code",
+            JSONObject().put("login_id", pending.getString("login_id")).put("code_verifier", pending.getString("verifier"))
+                .put("code", code),
+            signed = true,
+        )
+        if (r.code == 200) {
+            return when (val done = completeTelegramLogin(r)) {
+                is ApiResult.Ok -> ApiResult.Ok(CodeAnswer.SignedIn)
+                is ApiResult.Error -> done
+                ApiResult.NotAvailable -> ApiResult.NotAvailable
+            }
+        }
+        val j = r.json
+        val attemptsLeft = if (j.has("attempts_left")) j.optInt("attempts_left") else null
+        val answer = TelegramCodeRules.codeAnswer(r.code, r.error, attemptsLeft)
+        if (answer is ApiResult.Error && TelegramCodeRules.endsLogin(answer.code)) store.put(SecureStore.PENDING_TELEGRAM, null)
+        return answer
     }
 
     override fun cancelTelegramLogin() = store.put(SecureStore.PENDING_TELEGRAM, null)
@@ -456,3 +481,6 @@ class HttpAppApi(context: Context, private val baseUrl: String) : AppApi {
         fun randomUrlSafe(bytes: Int): String = b64url(ByteArray(bytes).also(random::nextBytes))
     }
 }
+
+/** One field for the plain-Kotlin parsers ([TelegramLoginRecord]): JSON null and absent are both null. */
+private fun jsonField(json: JSONObject, name: String): Any? = json.opt(name)?.takeUnless { it == JSONObject.NULL }

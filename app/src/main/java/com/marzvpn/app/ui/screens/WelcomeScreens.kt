@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Send
@@ -33,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -205,6 +207,8 @@ fun TelegramLoginScreen(
     onOpenTelegram: (String) -> Unit,
     onCancel: () -> Unit,
     onBack: () -> Unit,
+    onEnterCode: (String) -> Unit = {},
+    onEmail: () -> Unit = {},
 ) {
     // Returning to this screen (from Telegram, or after the app was restarted) continues the same request.
     LaunchedEffect(Unit) { onResume() }
@@ -214,13 +218,11 @@ fun TelegramLoginScreen(
     }) {
         when (state) {
             is TelegramUi.Waiting -> TelegramCodeStep(state, onOpenTelegram, onCancel)
+            is TelegramUi.Code -> TelegramCodeEntryStep(state, onOpenTelegram, onEnterCode, onEmail, onCancel)
             else -> {
+                // Before the request exists the app does not know which ceremony the server offers:
+                // its steps are shown on the next screen.
                 Text(stringResource(R.string.marz_login_telegram_intro), style = MaterialTheme.typography.bodyLarge)
-                MarzCard {
-                    Step(1, stringResource(R.string.marz_login_telegram_step1))
-                    Step(2, stringResource(R.string.marz_login_telegram_step2))
-                    Step(3, stringResource(R.string.marz_login_telegram_step3))
-                }
                 if (state is TelegramUi.Failed) ErrorText(loginError(state.code))
                 BigButton(
                     stringResource(if (state is TelegramUi.Failed) R.string.marz_login_telegram_new_code else R.string.marz_login_telegram_get_code),
@@ -234,6 +236,108 @@ fun TelegramLoginScreen(
             }
         }
     }
+}
+
+/**
+ * Code ceremony: open the bot on this phone, press "Get code", type the 6-digit code here. The typed
+ * code survives rotation and process death (saved state); the request itself is kept by the App API
+ * client. The poll goes on meanwhile: the code may also be typed on the marzvpn.com page.
+ */
+@Composable
+private fun TelegramCodeEntryStep(
+    state: TelegramUi.Code,
+    onOpenTelegram: (String) -> Unit,
+    onEnterCode: (String) -> Unit,
+    onEmail: () -> Unit,
+    onCancel: () -> Unit,
+) {
+    var code by rememberSaveable(state.ref) { mutableStateOf("") }
+    // The last code sent by itself at 6 digits: the same code is not sent again without a change.
+    var sent by rememberSaveable(state.ref) { mutableStateOf("") }
+    val canSend = code.length == 6 && !state.busy && !state.approved
+    LaunchedEffect(code, canSend) {
+        if (canSend && code != sent) {
+            sent = code
+            onEnterCode(code)
+        }
+    }
+    var now by remember { mutableStateOf(System.currentTimeMillis() / 1000) }
+    LaunchedEffect(state.expiresAtEpochSeconds) {
+        while (true) {
+            now = System.currentTimeMillis() / 1000
+            delay(1_000)
+        }
+    }
+    val left = (state.expiresAtEpochSeconds - now).coerceAtLeast(0)
+    // The bot button and the code field come first: back from Telegram, the field is in view above the keyboard.
+    BigButton(stringResource(R.string.marz_login_tgcode_open), { onOpenTelegram(state.telegramUrl) }, icon = Icons.AutoMirrored.Rounded.Send)
+    MarzCard(highlighted = true) {
+        OutlinedTextField(
+            value = code,
+            onValueChange = { v -> code = v.filter { it in '0'..'9' }.take(6) },
+            label = { Text(stringResource(R.string.marz_login_tgcode_code_label)) },
+            singleLine = true,
+            enabled = !state.approved,
+            textStyle = MaterialTheme.typography.headlineSmall.copy(letterSpacing = 6.sp),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword, imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(onDone = { if (canSend) { sent = code; onEnterCode(code) } }),
+            modifier = Modifier.fillMaxWidth(),
+        )
+        if (state.error != null && !state.approved) ErrorText(telegramCodeError(state.error, state.wrongAttemptsLeft))
+        val delivery = state.progress == "delivery_failed" && !state.approved
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            if (!delivery) {
+                CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
+                Spacer(Modifier.width(10.dp))
+            }
+            Text(
+                stringResource(
+                    when {
+                        state.approved -> R.string.marz_login_tgcode_status_approved
+                        delivery -> R.string.marz_login_tgcode_status_failed
+                        state.progress == "code_sent" -> R.string.marz_login_tgcode_status_sent
+                        state.progress == "code_requested" -> R.string.marz_login_tgcode_status_requested
+                        else -> R.string.marz_login_tgcode_status_waiting
+                    },
+                ),
+                style = MaterialTheme.typography.bodyMedium,
+                color = if (delivery) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface,
+            )
+        }
+        if (delivery) Text(stringResource(R.string.marz_login_tgcode_bot_unreachable), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        BigButton(stringResource(R.string.marz_login_tgcode_confirm), {
+            sent = code
+            onEnterCode(code)
+        }, enabled = canSend)
+        Text(
+            stringResource(R.string.marz_login_tgcode_request, ltr(state.ref), ltr(String.format(Locale.ROOT, "%d:%02d", left / 60, left % 60))),
+            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Text(stringResource(R.string.marz_login_tgcode_valid), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+    MarzCard {
+        Step(1, stringResource(R.string.marz_login_tgcode_step1))
+        Step(2, stringResource(R.string.marz_login_tgcode_step2))
+        Step(3, stringResource(R.string.marz_login_tgcode_step3))
+    }
+    Text(stringResource(R.string.marz_login_tgcode_intro), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    Text(stringResource(R.string.marz_login_tgcode_no_telegram), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    BigOutlinedButton(stringResource(R.string.marz_login_tgcode_email), onEmail, icon = Icons.Rounded.Email)
+    TextButton(onClick = onCancel) { Text(stringResource(R.string.marz_cancel)) }
+}
+
+/** Errors of a code typed in the app; never raw codes. */
+@Composable
+private fun telegramCodeError(code: String, attemptsLeft: Int?): String = when (code) {
+    "invalid_code" -> if (attemptsLeft != null) stringResource(R.string.marz_login_tgcode_err_wrong, attemptsLeft)
+        else stringResource(R.string.marz_login_tgcode_err_wrong_plain)
+    "invalid_code_format" -> stringResource(R.string.marz_login_tgcode_err_format)
+    "code_expired" -> stringResource(R.string.marz_login_tgcode_err_expired)
+    "code_not_requested" -> stringResource(R.string.marz_login_tgcode_err_not_requested)
+    "rate_limited", "too_many_attempts" -> stringResource(R.string.marz_error_too_many)
+    "storage_unavailable" -> stringResource(R.string.marz_error_storage)
+    "network", "upstream_unavailable", "internal_error", "try_again" -> stringResource(R.string.marz_login_tgcode_err_network)
+    else -> if (code.startsWith("http_5")) stringResource(R.string.marz_login_tgcode_err_network) else stringResource(R.string.marz_error_generic)
 }
 
 /** The number first, Telegram only on request: the user must be able to read and remember it. */
@@ -370,6 +474,8 @@ fun loginError(code: String, codeEntered: Boolean = false): String = stringResou
         "login_expired" -> R.string.marz_error_expired
         "login_rejected" -> R.string.marz_error_rejected
         "login_match_failed" -> R.string.marz_error_match_failed
+        "login_code_attempts" -> R.string.marz_login_tgcode_err_attempts
+        "login_already_used" -> R.string.marz_login_tgcode_err_ended
         "pilot_closed" -> R.string.marz_error_pilot_closed
         "email_login_disabled" -> R.string.marz_error_email_disabled
         "storage_unavailable" -> R.string.marz_error_storage

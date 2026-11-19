@@ -10,18 +10,19 @@ The original upstream README is kept as [`README.upstream.md`](README.upstream.m
 
 This program comes with ABSOLUTELY NO WARRANTY.
 
-## Current version: 1.0.3 (versionCode 1000390), Stable
+## Current version: 1.0.4 (versionCode 1000400), Stable
 
-The `main` branch (tag [`1.0.3-1000390`](https://github.com/amberfield2931/MARZ-VPN-Android/releases/tag/1.0.3-1000390))
-is the app source of the published **1.0.3**.
+The `main` branch (tag [`1.0.4-1000400`](https://github.com/amberfield2931/MARZ-VPN-Android/releases/tag/1.0.4-1000400))
+is the app source of the published **1.0.4**. New in 1.0.4: sign in with a 6-digit code that @MarzReality_bot sends in
+Telegram (typed in the app); email sign-in is unchanged.
 
 | | |
 |---|---|
-| Download | [marzvpn.com/android](https://marzvpn.com/android) · GitHub release [`stable-2026-11-16`](https://github.com/amberfield2931/MARZ-VPN-Apps/releases/tag/stable-2026-11-16) of MARZ-VPN-Apps · [SourceForge](https://sourceforge.net/projects/marz-vpn/) |
-| `MARZ-VPN-Android-1.0.3.apk` (Android 7.0+, arm64-v8a) SHA-256 | `ca1983484f093edc940f1797ffdefe5a8828e6df179e25d6bc32bd8d1bfd1577` |
-| Complete corresponding source `MARZ-VPN-Android-1.0.3-corresponding-source.tar` SHA-256 | `4769966d30e217812b3184148134d6bad9ff01dc7aee100256609e35a233b94f` |
+| Download | [marzvpn.com/android](https://marzvpn.com/android) · GitHub release [`stable-2026-11-19`](https://github.com/amberfield2931/MARZ-VPN-Apps/releases/tag/stable-2026-11-19) of MARZ-VPN-Apps · [SourceForge](https://sourceforge.net/projects/marz-vpn/) |
+| `MARZ-VPN-Android-1.0.4.apk` (Android 7.0+, arm64-v8a) SHA-256 | `c2537bbcaa3893a9d5f694b63d8d3fa405984b81a4a9df92c83eac3d406a8727` |
+| Complete corresponding source `MARZ-VPN-Android-1.0.4-corresponding-source.tar` SHA-256 | `00ffbf272772935c3ba821184102a7f25eb8b9bded40fc12422442c23e3df737` |
 | APK signing certificate SHA-256 | `341f9b40054fafe26ce3afd2cd633f727d0aef1045d641b96c4c59990a10ff6a` |
-| MARZ development commit | `5aaed7b8ffdb2b4bf0c27e837ebc1be286758ac1` |
+| MARZ development commit | `f6b9780db47d6d434e59d6672bdbb409b223bbb2` |
 
 **Installing and updating.** Install the APK from [marzvpn.com/android](https://marzvpn.com/android).
 A newer MARZ VPN installs over the old one and keeps your sign-in and settings, because every release is
@@ -34,7 +35,8 @@ over a newer one without removing the app first.
 
 | Version | versionCode | Git tag (app source) | Release with APK and complete corresponding source |
 |---|---|---|---|
-| **1.0.3** (Stable, current) | 1000390 | [`1.0.3-1000390`](https://github.com/amberfield2931/MARZ-VPN-Android/tree/1.0.3-1000390) | [MARZ-VPN-Apps `stable-2026-11-16`](https://github.com/amberfield2931/MARZ-VPN-Apps/releases/tag/stable-2026-11-16) |
+| **1.0.4** (Stable, current) | 1000400 | [`1.0.4-1000400`](https://github.com/amberfield2931/MARZ-VPN-Android/tree/1.0.4-1000400) | [MARZ-VPN-Apps `stable-2026-11-19`](https://github.com/amberfield2931/MARZ-VPN-Apps/releases/tag/stable-2026-11-19) |
+| 1.0.3 | 1000390 | [`1.0.3-1000390`](https://github.com/amberfield2931/MARZ-VPN-Android/tree/1.0.3-1000390) | [MARZ-VPN-Apps `stable-2026-11-16`](https://github.com/amberfield2931/MARZ-VPN-Apps/releases/tag/stable-2026-11-16) |
 | 1.0.2 | 1000093 | [`1.0.2-1000093`](https://github.com/amberfield2931/MARZ-VPN-Android/tree/1.0.2-1000093) | [MARZ-VPN-Apps `stable-2026-11-05-2`](https://github.com/amberfield2931/MARZ-VPN-Apps/releases/tag/stable-2026-11-05-2) |
 | 1.0.1 | 1000092 | [`1.0.1-1000092`](https://github.com/amberfield2931/MARZ-VPN-Android/tree/1.0.1-1000092) | [MARZ-VPN-Apps `stable-2026-11-04`](https://github.com/amberfield2931/MARZ-VPN-Apps/releases/tag/stable-2026-11-04) |
 | 1.0.0 | 1000091 | [`1.0.0-1000091`](https://github.com/amberfield2931/MARZ-VPN-Android/tree/1.0.0-1000091) | [MARZ-VPN-Apps `beta-2026-11-03`](https://github.com/amberfield2931/MARZ-VPN-Apps/releases/tag/beta-2026-11-03) |
@@ -64,18 +66,16 @@ See [`BUILD-RELEASE.md`](BUILD-RELEASE.md). In short:
 3. Run `./gradlew :app:assembleOtherRelease`.
 4. Sign the result with your own key.
 
-`BUILD-RELEASE.md` is copied unchanged from the tar. Two details in it are out of date:
-- its title and example file names still say `1.0.0-rc6`;
-- the app archive unpacks to `MARZ-VPN-1.0.3-1000390-source/`, not `MARZ-VPN/`.
+`BUILD-RELEASE.md` is copied unchanged from the tar (for 1.0.4 its title and file names are up to date).
 
-The unsigned APKs come out as `app/build/outputs/apk/other/release/MARZ-VPN-1.0.3-<abi>-unsigned.apk`.
+The unsigned APKs come out as `app/build/outputs/apk/other/release/MARZ-VPN-1.0.4-<abi>-unsigned.apk`.
 
-**Checked on 2026-11-17.** The app was rebuilt offline from `MARZ-VPN-Android-1.0.3-corresponding-source.tar`
-(Gradle 9.7.0, JDK 21, Android SDK/NDK as in `BUILD-RELEASE.md`). Every entry of the rebuilt arm64-v8a APK is identical to the
-published `MARZ-VPN-Android-1.0.3.apk`, except the three signature entries. The 81 JVM unit tests pass.
+**Checked on 2026-11-18.** The app was rebuilt offline from the app archive of `MARZ-VPN-Android-1.0.4-corresponding-source.tar`
+(Gradle 9.7.0, JDK 21, `--offline`). Every entry of all five rebuilt APKs (arm64-v8a, armeabi-v7a, x86, x86_64, universal) is
+identical to the published files, except the signature entries.
 
 For that build the engine `libbox.aar` was not rebuilt; MARZ's existing build was used. Its `libbox.so` is the same file in
-1.0.0-rc6, 1.0.2 and 1.0.3. The engine inputs in the 1.0.3 tar (sing-box, Go modules, gomobile) are byte-identical to those
+1.0.0-rc6, 1.0.2, 1.0.3 and 1.0.4. The engine inputs in the 1.0.4 tar (sing-box, Go modules, gomobile) are byte-identical to those
 of the rc6 tar. On 2026-10-28, `libbox.so` was rebuilt from the rc6 tar and came out byte-identical.
 
 ## Licenses

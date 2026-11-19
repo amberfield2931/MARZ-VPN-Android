@@ -1,4 +1,4 @@
-# Building MARZ VPN 1.0.0-rc6 (1000008) from this source
+# Building MARZ VPN 1.0.4 (1000400) from this source
 
 The published APKs were built from exactly these inputs. Following the steps gives byte-identical
 native engines (`libbox.so`) and an APK whose contents match the published one except for the
@@ -9,7 +9,7 @@ own key and install it; nothing in the app or the MARZ service checks the signin
 
 | File | What |
 |---|---|
-| `MARZ-VPN-1.0.3-1000390-source.tar.gz` | the Android app (MARZ commit in `source-provenance.json`), `MODIFICATIONS.md` |
+| `MARZ-VPN-1.0.4-1000400-source.tar.gz` | the Android app (MARZ commit in `source-provenance.json`), `MODIFICATIONS.md` |
 | `sing-box-v1.14.3-source.tar.gz` | sing-box `v1.14.3` (`7054cac5…11b1`) with the `go.sum` used for the build |
 | `go-modules-sing-box-v1.14.3.tar.gz` | every Go module the engine links, in `GOPROXY=file://` layout (checked against `go.sum`) |
 | `gomobile-v0.1.13-source.tar.gz` | `github.com/sagernet/gomobile` v0.1.13 |
@@ -57,11 +57,11 @@ from naiveproxy/Chromium (cronet-go commit `049f2909701ca088c9569f6b303bba5376a2
 ## 2. APK
 
 ```sh
-cd $B && tar xzf MARZ-VPN-1.0.3-1000390-source.tar.gz && cd MARZ-VPN
+cd $B && tar xzf MARZ-VPN-1.0.4-1000400-source.tar.gz && cd MARZ-VPN-1.0.4-1000400-source
 mkdir -p app/libs && cp $B/build/sing-box/libbox.aar app/libs/
 echo "sdk.dir=<sdk>" > local.properties
 JAVA_HOME=<jdk21> ./gradlew :app:assembleOtherRelease
-# app/build/outputs/apk/other/release/MARZ-VPN-1.0.0-rc6-{arm64-v8a,armeabi-v7a,x86,x86_64,universal}-unsigned.apk
+# app/build/outputs/apk/other/release/MARZ-VPN-1.0.4-{arm64-v8a,armeabi-v7a,x86,x86_64,universal}-unsigned.apk
 ```
 
 Gradle downloads the Android libraries listed in `licenses.json` from Google Maven, Maven Central,
@@ -73,7 +73,7 @@ this source — use this file instead.
 Without `MARZ_RELEASE_KEYSTORE` the release APKs are unsigned. Sign with your own key:
 
 ```sh
-<sdk>/build-tools/37.0.0/apksigner sign --ks my.jks --out my.apk MARZ-VPN-1.0.0-rc6-arm64-v8a-unsigned.apk
+<sdk>/build-tools/37.0.0/apksigner sign --ks my.jks --out my.apk MARZ-VPN-1.0.4-arm64-v8a-unsigned.apk
 ```
 
 Android does not let an APK signed with another key update the installed MARZ VPN: uninstall it
@@ -85,16 +85,13 @@ does not publish that flavour.
 ## 3. Compare with the published APK
 
 ```sh
-unzip -o -q <downloaded>/MARZ-VPN-1.0.0-rc6-1000008-arm64-v8a.apk -d published
-unzip -o -q app/build/outputs/apk/other/release/MARZ-VPN-1.0.0-rc6-arm64-v8a-unsigned.apk -d mine
+unzip -o -q <downloaded>/MARZ-VPN-Android-1.0.4.apk -d published
+unzip -o -q app/build/outputs/apk/other/release/MARZ-VPN-1.0.4-arm64-v8a-unsigned.apk -d mine
 rm published/META-INF/MARZVPN-.SF published/META-INF/MARZVPN-.RSA published/META-INF/MANIFEST.MF
 diff -r published mine && echo "contents identical (signature aside)"
 ```
 
-MARZ checked this on 2026-10-28, offline, from this bundle only: every entry of all five APKs
-(arm64-v8a, armeabi-v7a, x86, x86_64, universal) is identical to the published file except the three
-signature entries. `libbox.so` is byte-identical to the shipped one: arm64-v8a built offline from
-this bundle exactly as in step 1; armeabi-v7a, x86 and x86_64 built with the same command, toolchain
-and module versions (the module zips in this bundle hash-match `go.sum`).
+
+MARZ checked this on 2026-11-18, offline, from the app archive in this bundle and the same libbox.aar: every entry of all five APKs (arm64-v8a, armeabi-v7a, x86, x86_64, universal) is identical to the published file except the signature entries. `libbox.so` is byte-identical to the one in 1.0.3, 1.0.2 and 1.0.0-rc6; the rc6 engine was rebuilt byte for byte from these engine inputs on 2026-10-28.
 
 Published certificate SHA-256: `34:1F:9B:40:05:4F:AF:E2:6C:E3:AF:D2:CD:63:3F:72:7D:0A:EF:10:45:D6:41:B9:6C:4C:59:99:0A:10:FF:6A`.

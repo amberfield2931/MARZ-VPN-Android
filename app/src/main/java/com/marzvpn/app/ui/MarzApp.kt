@@ -188,9 +188,14 @@ fun MarzApp(vm: MarzViewModel, onToggleConnection: () -> Unit, onEngineTools: ()
             TelegramLoginScreen(
                 available = vm.api.isAvailable,
                 state = telegram,
-                onStart = vm::startTelegramLogin,
+                onStart = { vm.startTelegramLogin(com.marzvpn.app.api.CheckoutRules.apiLocale(locale.language)) },
                 onResume = vm::resumeTelegramLogin,
                 onOpenTelegram = { url -> Links.open(context, url) },
+                onEnterCode = vm::enterTelegramCode,
+                onEmail = {
+                    vm.cancelTelegramLogin()
+                    nav.navigate(Route.LOGIN_EMAIL)
+                },
                 onCancel = vm::cancelTelegramLogin,
                 onBack = nav::back,
             )

@@ -93,6 +93,24 @@ sealed interface TelegramUi {
     data object Idle : TelegramUi
     data object Starting : TelegramUi
     data class Waiting(val telegramUrl: String, val matchCode: String, val expiresAtEpochSeconds: Long) : TelegramUi
+
+    /**
+     * Code ceremony: open the bot, press "Get code", type the 6-digit code here. [progress] and
+     * [attemptsLeft] come from the /confirm poll; [error] is about the last code typed here
+     * ([wrongAttemptsLeft] after a wrong one); [approved]: accepted elsewhere, signing in.
+     */
+    data class Code(
+        val telegramUrl: String,
+        val ref: String,
+        val expiresAtEpochSeconds: Long,
+        val codeTtlSeconds: Int,
+        val progress: String? = null,
+        val attemptsLeft: Int? = null,
+        val busy: Boolean = false,
+        val error: String? = null,
+        val wrongAttemptsLeft: Int? = null,
+        val approved: Boolean = false,
+    ) : TelegramUi
     data class Failed(val code: String) : TelegramUi
 }
 
@@ -224,6 +242,13 @@ class MarzViewModel(app: android.app.Application) : AndroidViewModel(app) {
     private val _telegram = MutableStateFlow<TelegramUi>(TelegramUi.Idle)
     val telegram: StateFlow<TelegramUi> = _telegram.asStateFlow()
     private var telegramJob: Job? = null
+    private var telegramCodeJob: Job? = null
+    private val telegramCode = TelegramCodeFlow(
+        api, _telegram,
+        nowSeconds = { System.currentTimeMillis() / 1000 },
+        sleep = { delay(it) },
+        signedIn = { syncNow() },
+    )
 
     private val _email = MutableStateFlow<EmailUi>(EmailUi.EnterEmail)
     val email: StateFlow<EmailUi> = _email.asStateFlow()
@@ -508,20 +533,26 @@ class MarzViewModel(app: android.app.Application) : AndroidViewModel(app) {
     // ---- Telegram login --------------------------------------------------------------------
 
     /**
-     * Creates a login request and shows its number. Telegram is NOT opened here: the user reads the
-     * number first and opens the bot with a button. Polling runs until done, failed or expired.
+     * Creates a login request and shows it (the number, or the code steps). Telegram is NOT opened
+     * here: the user reads the screen first and opens the bot with a button. Polling runs until done,
+     * failed or expired. [locale]: ru, fa, zh-cn or en.
      */
-    fun startTelegramLogin() {
+    fun startTelegramLogin(locale: String = "en") {
         telegramJob?.cancel()
+        telegramCodeJob?.cancel()
+        telegramCode.stop()
         _telegram.value = TelegramUi.Starting
         telegramJob = viewModelScope.launch {
-            when (val r = api.startTelegramLogin()) {
-                is ApiResult.Ok -> awaitTelegramLogin(r.value)
+            when (val r = api.startTelegramLogin(locale)) {
+                is ApiResult.Ok -> follow(r.value)
                 is ApiResult.Error -> _telegram.value = TelegramUi.Failed(r.code)
                 ApiResult.NotAvailable -> _telegram.value = TelegramUi.Idle
             }
         }
     }
+
+    private suspend fun follow(login: TelegramLogin) =
+        if (login.flow == TelegramLogin.Flow.Code) telegramCode.await(login) else awaitTelegramLogin(login)
 
     /**
      * Picks up a login request that is still pending (after returning from Telegram or an app
@@ -535,14 +566,30 @@ class MarzViewModel(app: android.app.Application) : AndroidViewModel(app) {
             _telegram.value = TelegramUi.Failed("login_expired")
             return
         }
-        telegramJob = viewModelScope.launch { awaitTelegramLogin(pending) }
+        telegramJob = viewModelScope.launch { follow(pending) }
+    }
+
+    /**
+     * The app is back on screen (e.g. from Telegram with the code): a pending code request is
+     * followed again if its polling stopped. Telegram is never opened from here.
+     */
+    fun resumeTelegramCodeLogin() {
+        if (api.isSignedIn()) return
+        if (api.pendingTelegramLogin()?.flow != TelegramLogin.Flow.Code) return
+        resumeTelegramLogin()
+    }
+
+    /** The 6-digit code typed in the app (code ceremony). */
+    fun enterTelegramCode(code: String) {
+        if (telegramCodeJob?.isActive == true) return
+        telegramCodeJob = viewModelScope.launch { telegramCode.enter(code) }
     }
 
     private suspend fun awaitTelegramLogin(login: TelegramLogin) {
         _telegram.value = TelegramUi.Waiting(login.telegramUrl, login.matchCode, login.expiresAtEpochSeconds)
         while (System.currentTimeMillis() / 1000 < login.expiresAtEpochSeconds) {
             when (val r = api.pollTelegramLogin()) {
-                is ApiResult.Ok -> if (r.value == LoginProgress.Done) {
+                is ApiResult.Ok -> if (r.value.state == LoginProgress.Done) {
                     _telegram.value = TelegramUi.Idle
                     syncNow()
                     return
@@ -560,7 +607,9 @@ class MarzViewModel(app: android.app.Application) : AndroidViewModel(app) {
     }
 
     fun cancelTelegramLogin() {
+        telegramCode.stop()
         telegramJob?.cancel()
+        telegramCodeJob?.cancel()
         api.cancelTelegramLogin()
         _telegram.value = TelegramUi.Idle
     }

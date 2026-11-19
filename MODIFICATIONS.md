@@ -1,6 +1,6 @@
 # MARZ VPN for Android — modification notice
 
-This is the corresponding source of **MARZ VPN 1.0.3 (1000390)** (package `com.marzvpn.app`),
+This is the corresponding source of **MARZ VPN 1.0.4 (1000400)** (package `com.marzvpn.app`),
 built from the app source tarball in this archive.
 
 MARZ VPN is a **modified version of sing-box-for-android (SFA)**:
@@ -61,3 +61,7 @@ No signing key, password, token or user data is part of this source.
 
 ## Changes in 1.0.3 (1000390) against 1.0.2 (1000093)
 `marz-changes-1.0.2-to-1.0.3.patch`: the plans come from the public App API catalog (GET https://app-api.marzvpn.com/v1/catalog, no account data sent); the app offers Basic and, only when the catalog describes it, Pro and Pro 6 months, and shows the Pro package state of a signed-in Pro customer. The engine `libbox` and every dependency are the same as in 1.0.2.
+
+## Changes in 1.0.4 (1000400) against 1.0.3 (1000390)
+`marz-changes-1.0.3-to-1.0.4.patch`: sign-in with a one-time code from the MARZ VPN Telegram bot (the app asks the App API for a sign-in request, the user opens the bot, the bot shows a 6-digit code, the user enters it in the app); the code screen and its texts in English, Russian, Persian and Simplified Chinese. The engine `libbox` and every dependency are the same as in 1.0.3 and 1.0.2.
+`marz/tools/scan_source_bundle.py` (an internal pre-publication scanner, not used to build the app) is no longer included.

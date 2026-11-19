@@ -15,13 +15,17 @@ interface AppApi {
 
     fun isSignedIn(): Boolean
 
-    suspend fun startTelegramLogin(): ApiResult<TelegramLogin>
+    /** [locale]: ru, fa, zh-cn or en (the language of the marzvpn.com page of the code ceremony). */
+    suspend fun startTelegramLogin(locale: String = "en"): ApiResult<TelegramLogin>
 
     /** The Telegram login started on this device and not finished yet (survives app restarts). */
     fun pendingTelegramLogin(): TelegramLogin?
 
     /** Polls the pending Telegram login started on this device. */
-    suspend fun pollTelegramLogin(): ApiResult<LoginProgress>
+    suspend fun pollTelegramLogin(): ApiResult<TelegramPoll>
+
+    /** The 6-digit code from the bot, typed in the app (code ceremony only; signed with the device key). */
+    suspend fun enterTelegramCode(code: String): ApiResult<CodeAnswer> = ApiResult.NotAvailable
     fun cancelTelegramLogin()
 
     suspend fun startEmailLogin(email: String, locale: String): ApiResult<Unit>
@@ -60,8 +64,23 @@ interface AppApi {
 
 enum class LoginProgress { Pending, Done }
 
-/** [matchCode] is shown in the app; the user picks the same number in the bot (anti-phishing). */
-data class TelegramLogin(val telegramUrl: String, val matchCode: String, val expiresAtEpochSeconds: Long)
+/**
+ * Classic: [matchCode] is shown in the app; the user picks the same number in the bot (anti-phishing).
+ * Code: the user opens the bot ([telegramUrl]), presses "Get code" and types the 6-digit code in the app
+ * (or on [verificationUrl]); [ref] is the request's public reference shown by the bot and the page.
+ */
+data class TelegramLogin(
+    val telegramUrl: String,
+    val matchCode: String,
+    val expiresAtEpochSeconds: Long,
+    val flow: Flow = Flow.Match,
+    val ref: String = "",
+    val verificationUrl: String = "",
+    val codeTtlSeconds: Int = 0,
+    val pollIntervalSeconds: Int = 2,
+) {
+    enum class Flow { Match, Code }
+}
 
 /** One of the account's VPN profiles (opaque id, never a Marzban username or UUID). */
 data class VpnProfile(val id: String, val entitlement: Entitlement?, val state: String, val queued: Int = 0)
@@ -88,7 +107,7 @@ sealed interface ApiResult<out T> {
 object PreviewAppApi : AppApi {
     override val isAvailable = false
     override fun isSignedIn() = false
-    override suspend fun startTelegramLogin() = ApiResult.NotAvailable
+    override suspend fun startTelegramLogin(locale: String) = ApiResult.NotAvailable
     override fun pendingTelegramLogin(): TelegramLogin? = null
     override suspend fun pollTelegramLogin() = ApiResult.NotAvailable
     override fun cancelTelegramLogin() {}
